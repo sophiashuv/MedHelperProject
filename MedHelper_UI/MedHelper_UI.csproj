@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="MedHelperSignUp.jpg" />
+    <None Remove="MedHelperTitle.jpg" />
+    <None Remove="MedHelperWelcome.jpg" />
+    <None Remove="MedHerperCircle.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\MedHelperSignUp.jpg" />
+    <Resource Include="images\MedHelperTitle.jpg" />
+    <Resource Include="images\MedHelperWelcome.jpg" />
+    <Resource Include="images\MedHerperCircle.png" />
+  </ItemGroup>
+
+</Project>

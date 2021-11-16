@@ -16,25 +16,20 @@ using System.Windows.Shapes;
 namespace MedHelper_UI
 {
     /// <summary>
-    /// Interaction logic for Page_signUp.xaml
+    /// Interaction logic for Page_EditInfo.xaml
     /// </summary>
-    public partial class Page_signIn : Page
+    public partial class Page_EditInfo : Page
     {
-        public MainWindow MainWindow;
-        public Page_signIn(MainWindow mainWindow)
+        public Page_Doctor MainWindow;
+        public Page_EditInfo(Page_Doctor mainWindow)
         {
             InitializeComponent();
             MainWindow = mainWindow;
         }
 
-        private void BtmClickSignInPage(object sender, RoutedEventArgs e)
+        private void BtmClickEdit(object sender, RoutedEventArgs e)
         {
-            MainWindow.MainFrame.Content = new Page_Doctor();
-        }
-
-        private void BtmClickRegisterSignInPage(object sender, RoutedEventArgs e)
-        {
-            MainWindow.MainFrame.Content = new Page_signUp(MainWindow);
+            MainWindow.DoctorFrame.Content = new Page_DoctorInfo(MainWindow);
         }
     }
 }

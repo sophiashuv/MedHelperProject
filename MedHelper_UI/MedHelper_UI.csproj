@@ -7,17 +7,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="DoctorLogo1.png" />
+    <None Remove="EditLogo.png" />
     <None Remove="MedHelperSignUp.jpg" />
     <None Remove="MedHelperTitle.jpg" />
+    <None Remove="MedHelperTitle.png" />
     <None Remove="MedHelperWelcome.jpg" />
     <None Remove="MedHerperCircle.png" />
+    <None Remove="SearchLogo.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="images\DoctorLogo1.png" />
+    <Resource Include="images\EditLogo.png" />
     <Resource Include="images\MedHelperSignUp.jpg" />
     <Resource Include="images\MedHelperTitle.jpg" />
     <Resource Include="images\MedHelperWelcome.jpg" />
     <Resource Include="images\MedHerperCircle.png" />
+    <Resource Include="images\MedHelperTitle.png" />
+    <Resource Include="images\SearchLogo.png" />
   </ItemGroup>
 
 </Project>

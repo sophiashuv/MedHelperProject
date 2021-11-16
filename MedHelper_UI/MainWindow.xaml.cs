@@ -38,7 +38,7 @@ namespace MedHelper_UI
 
         private void BtmClickSignUp(object sender, RoutedEventArgs e)
         {
-            MainFrame.Content = new Page_signUp();
+            MainFrame.Content = new Page_signUp(this);
         }
 
         private void BtmClickMedHelper(object sender, RoutedEventArgs e)

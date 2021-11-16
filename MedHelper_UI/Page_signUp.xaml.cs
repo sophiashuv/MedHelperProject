@@ -20,14 +20,16 @@ namespace MedHelper_UI
     /// </summary>
     public partial class Page_signUp : Page
     {
-        public Page_signUp()
+        public MainWindow MainWindow;
+        public Page_signUp(MainWindow mainWindow)
         {
             InitializeComponent();
+            MainWindow = mainWindow;
         }
 
         private void BtmClickRegister(object sender, RoutedEventArgs e)
         {
-            
+            MainWindow.MainFrame.Content = new Page_Doctor();
         }
     }
 }

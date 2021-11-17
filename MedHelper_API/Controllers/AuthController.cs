@@ -5,13 +5,14 @@ using MedHelper_API.Responses;
 using MedHelper_API.Service.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyApi.Controllers;
 
 namespace MedHelper_API.Controllers
 {
     [Authorize]
     [ApiController]
     [Route("api/v1/auth")]
-    public class AuthController: ControllerBase
+    public class AuthController: BaseController
     {
         private readonly IAuthService _authService;
 
@@ -44,7 +45,7 @@ namespace MedHelper_API.Controllers
             }
             catch (AuthenticationException e)
             {
-                return Unauthorized(new {  e.Message });
+                return Unauthorized(e.Message);
             }
         }
     }

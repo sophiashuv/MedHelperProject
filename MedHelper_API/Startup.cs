@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using AutoMapper;
+using AutoWrapper;
 using JwtAuth;
 using MedHelper_API.Config;
 using MedHelper_API.Profile;
@@ -42,11 +43,13 @@ namespace MedHelper_API
             services.AddSingleton(mappingConfig.CreateMapper());
             
             // Services
+            services.AddScoped<IPatientService, PatientService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IJwtAuthManager, JwtAuthManager>();
 
             // Repositories
             services.AddScoped<IDoctorRepository, DoctorRepository>();
+            services.AddScoped<IPatientRepository, PatientRepository>();
             
             // JWT
             var jwtTokenConfig = Configuration.GetSection(nameof(JwtTokenConfig)).Get<JwtTokenConfig>();
@@ -83,6 +86,10 @@ namespace MedHelper_API
             {
                 app.UseDeveloperExceptionPage();
             }
+            
+            app.UseApiResponseAndExceptionWrapper(new AutoWrapperOptions { 
+                UseApiProblemDetailsException = true 
+            });
 
             app.UseRouting();
 

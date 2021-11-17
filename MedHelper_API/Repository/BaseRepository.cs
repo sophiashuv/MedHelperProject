@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MedHelper_API.Repository.Contracts;
 using MedHelper_EF.Models;
@@ -15,10 +17,13 @@ namespace MedHelper_API.Repository
             _context = postgresDbContext;
         }
         
+        // не працює (((
         public async Task<TEntity> GetById(int id)
         {
-            var result = await _context.Set<TEntity>().FirstOrDefaultAsync(obj => GetTEntityIdValue(obj) == id);
-            if (result == null) throw new ArgumentNullException("Not Found!");
+            Console.Write(id);
+            // var result = await _context.Set<TEntity>(). FirstOrDefaultAsync(obj => obj.GetId() == id);
+            var result = await _context.Set<TEntity>().Where(obj => obj.GetId() == id).FirstOrDefaultAsync();
+            if (result == null) throw new KeyNotFoundException($"{typeof(TEntity)} hasn't been found.");
 
             return result;
         }
@@ -39,15 +44,6 @@ namespace MedHelper_API.Repository
         {
             _context.Update(item);
             await _context.SaveChangesAsync();
-        }
-
-        // FIXME: temp
-        private int GetTEntityIdValue(TEntity obj) 
-        {
-            var type = obj.GetType();
-            var propertyName = type.Name + "ID";
-
-            return (int)type.GetProperty(propertyName).GetValue(obj, null);
         }
     }
 }

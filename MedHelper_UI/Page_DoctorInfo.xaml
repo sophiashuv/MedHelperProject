@@ -16,8 +16,8 @@
                 <SolidColorBrush Color="#FFED635E" Opacity="0.7"/>
             </StackPanel.Background>
             <StackPanel HorizontalAlignment="Left" Width="175" Height="150" >
-                <Image Source="images/DoctorLogo1.png" Width="100" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0"></Image>
-                <Button Content="Add Patient" MinHeight="25" HorizontalAlignment="Center" MinWidth="100" VerticalAlignment="Bottom" BorderBrush="White" Background="#FF56C1CA" Foreground="White" FontSize="16" FontWeight="Bold" Height="31" Width="80" Margin="0,10,0,0"/>
+                <Image Source="images/DoctorLogo.png" Width="100" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0"></Image>
+                <Button Content="Add Patient" MinHeight="25" HorizontalAlignment="Center" MinWidth="100" VerticalAlignment="Bottom" BorderBrush="White" Background="#FF56C1CA" Foreground="White" FontSize="16" FontWeight="Bold" Height="31" Width="80" Margin="0,10,0,0" Click="BtmAddPatientClick"/>
             </StackPanel>
             <StackPanel HorizontalAlignment="Right" Width="175">
                 <TextBlock HorizontalAlignment="Center" Text="TestUserName" VerticalAlignment="Center" Margin="0,10,0,10" FontSize="16" />

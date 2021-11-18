@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:MedHelper_UI"
+      xmlns:local="clr-namespace:MedHelper_UI" xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Page_AddPatient">
@@ -12,41 +12,68 @@
         <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="50,10,50,0">
             <TextBlock HorizontalAlignment="Left" Margin="10,0,10,5" Text="Add Patient:" VerticalAlignment="Top" MinWidth="100" FontSize="36" FontWeight="Bold" Foreground="#FFED635E"/>
             <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Background="#FF56C1CA" Margin="0,0,0,50" Height="270">
-                <StackPanel Orientation="Horizontal" Margin="50,0,50,10" VerticalAlignment="Top">
+                <StackPanel Orientation="Horizontal" Margin="35,0,35,10" VerticalAlignment="Top">
                     <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="30,10,0,0">
                         <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="0,0,0,10">
                             <TextBlock HorizontalAlignment="Left" Text="Patient Name:" VerticalAlignment="Center" Margin="0,0,0,5" FontSize="16" />
                             <TextBox HorizontalAlignment="Left" Text="Name" VerticalAlignment="Top" Width="222" Height="25" Foreground="#FF716E6E" />
                         </StackPanel>
-                        <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="0,0,0,10">
-                            <TextBlock HorizontalAlignment="Left" Text="Your last name:" VerticalAlignment="Center" Margin="0,0,0,5" FontSize="16" />
-                            <TextBox HorizontalAlignment="Left" Text="Last Name" VerticalAlignment="Top" Width="222" Height="25" Foreground="#FF716E6E" />
+                        <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Left" AutomationProperties.ItemType="int" Margin="0,0,0,10">
+                            <TextBlock HorizontalAlignment="Left" Text="Date of buirth:" VerticalAlignment="Center" Margin="0,0,0,5" FontSize="16" />
+                            <syncfusion:UpDown Name="upDown" Value="2000" Width="100" Height="25"/>
                         </StackPanel>
-                        <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Left">
-                            
-                            <TextBlock HorizontalAlignment="Left" Text="Your email address:" VerticalAlignment="Center" Margin="0,0,0,5" FontSize="16" />
-                            <ListBox></ListBox>
-                            <TextBox HorizontalAlignment="Left" Text="Email address" VerticalAlignment="Top" Width="222" Height="25" Foreground="#FF716E6E" />
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="0,0,0,5">
+                            <TextBlock HorizontalAlignment="Left" Text="Sex:" VerticalAlignment="Center" Margin="0,0,5,5" FontSize="16" />
+                            <RadioButton VerticalAlignment="Center" Margin="0,0,5,0">Male</RadioButton>
+                            <RadioButton VerticalAlignment="Center">Female</RadioButton>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+                            <TextBlock HorizontalAlignment="Left" Text="Medicine List:" VerticalAlignment="Center" Margin="0,0,5,5" FontSize="16" />
+                            <ScrollViewer Height="50" Width="222" Name="MainBarScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" VerticalAlignment="Bottom" Background="#FFED635E" Foreground="White" BorderBrush="#FFED635E" HorizontalAlignment="Stretch" Margin="0,0,0,5">
+                                <StackPanel x:Name="StackP1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="192" Height="Auto">
+
+                                </StackPanel>
+                            </ScrollViewer>
+                            <StackPanel Orientation="Horizontal">
+                                <Button HorizontalAlignment="Right" VerticalAlignment="Stretch" BorderBrush="{x:Null}" Foreground="{x:Null}" FontWeight="Bold" Width="20" Height="20" Click="BtnAddMedicine" AutomationProperties.HelpText="Add a Medicine">
+                                    <Button.Background>
+                                        <ImageBrush ImageSource="images/plusLogo.png"/>
+                                    </Button.Background>
+                                </Button>
+                                <Button HorizontalAlignment="Right" VerticalAlignment="Stretch" BorderBrush="{x:Null}" Foreground="{x:Null}" FontWeight="Bold" Width="20" Height="20" Click="BtnDelMedicine" AutomationProperties.HelpText="Remove a Medicine">
+                                    <Button.Background>
+                                        <ImageBrush ImageSource="images/MinusLogo.png"/>
+                                    </Button.Background>
+                                </Button>
+                            </StackPanel>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="50,10,0,0">
-                        <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="0,0,0,10">
-                            <TextBlock HorizontalAlignment="Left" Text="User name:" VerticalAlignment="Center" Margin="0,0,0,5" FontSize="16" />
-                            <TextBox HorizontalAlignment="Left" Text="User Name" VerticalAlignment="Top" Width="222" Height="25" Foreground="#FF716E6E" />
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+                            <TextBlock HorizontalAlignment="Left" Text="Medicine List:" VerticalAlignment="Center" Margin="0,0,5,5" FontSize="16" />
+                            <ScrollViewer Height="50" Width="222" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" VerticalAlignment="Bottom" Background="#FFED635E" Foreground="White" BorderBrush="#FFED635E" HorizontalAlignment="Stretch" Margin="0,0,0,5">
+                                <StackPanel x:Name="StackP2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="192" Height="Auto">
+
+                                </StackPanel>
+                            </ScrollViewer>
+                            <StackPanel Orientation="Horizontal">
+                                <Button HorizontalAlignment="Right" VerticalAlignment="Stretch" BorderBrush="{x:Null}" Foreground="{x:Null}" FontWeight="Bold" Width="20" Height="20" Click="BtnAddDisaster" AutomationProperties.HelpText="Add a Disaster">
+                                    <Button.Background>
+                                        <ImageBrush ImageSource="images/plusLogo.png"/>
+                                    </Button.Background>
+                                </Button>
+                                <Button HorizontalAlignment="Right" VerticalAlignment="Stretch" BorderBrush="{x:Null}" Foreground="{x:Null}" FontWeight="Bold" Width="20" Height="20" Click="BtnDelDisaster" AutomationProperties.HelpText="Remove a Disaster">
+                                    <Button.Background>
+                                        <ImageBrush ImageSource="images/MinusLogo.png"/>
+                                    </Button.Background>
+                                </Button>
+                            </StackPanel>
                         </StackPanel>
-                        <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="0,0,0,10">
-                            <TextBlock HorizontalAlignment="Left" Text="Your password:" VerticalAlignment="Center" Margin="0,0,0,5" FontSize="16" />
-                            <PasswordBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="222" Height="25" />
-                        </StackPanel>
-                        <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Left">
-                            <TextBlock HorizontalAlignment="Left" Text="Confirm password:" VerticalAlignment="Center" Margin="0,0,0,5" FontSize="16" />
-                            <PasswordBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="222" Height="25" />
+                        <StackPanel Height="150" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,0">
+                            <Image Source="images/Patient.png" VerticalAlignment="Center" HorizontalAlignment="Left" Height="120" Width="120"></Image>
+                            <Button Content="Add Patient" HorizontalAlignment="Right" VerticalAlignment="Stretch" BorderBrush="White" Background="#FFED635E" Foreground="White" FontSize="16" FontWeight="Bold" Height="31" Width="100" Margin="20,0,0,0" Click="BtmAddPatientToDb" />
                         </StackPanel>
                     </StackPanel>
-                </StackPanel>
-                <StackPanel Height="60" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                    <Image Source="images/MedHelperSignUp.jpg" VerticalAlignment="Center" HorizontalAlignment="Center" Height="50" Width="50"></Image>
-                    <Button Content="Sign up" MinHeight="25" HorizontalAlignment="Right" MinWidth="70" VerticalAlignment="Stretch" BorderBrush="White" Background="#FFED635E" Foreground="White" FontSize="16" FontWeight="Bold" Height="31" Width="80" Margin="10,5,0,5" Click="BtmClickRegister" />
                 </StackPanel>
             </StackPanel>
         </StackPanel>

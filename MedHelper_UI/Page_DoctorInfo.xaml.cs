@@ -48,5 +48,10 @@ namespace MedHelper_UI
         {
             MainWindow.DoctorFrame.Content = new Page_EditInfo(MainWindow);
         }
+
+        private void BtmAddPatientClick(object sender, RoutedEventArgs e)
+        {
+            MainWindow.DoctorFrame.Content = new Page_AddPatient(MainWindow);
+        }
     }
 }

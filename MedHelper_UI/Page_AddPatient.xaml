@@ -8,6 +8,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Page_AddPatient">
 
+
     <Grid Margin="10,0,0,0">
         <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="50,10,50,0">
             <TextBlock HorizontalAlignment="Left" Margin="10,0,10,5" Text="Add Patient:" VerticalAlignment="Top" MinWidth="100" FontSize="36" FontWeight="Bold" Foreground="#FFED635E"/>
@@ -15,31 +16,40 @@
                 <StackPanel Orientation="Horizontal" Margin="35,0,35,10" VerticalAlignment="Top">
                     <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="30,10,0,0">
                         <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="0,0,0,10">
-                            <TextBlock HorizontalAlignment="Left" Text="Patient Name:" VerticalAlignment="Center" Margin="0,0,0,5" FontSize="16" />
+                            <TextBlock HorizontalAlignment="Left" Text="Patient Name:" VerticalAlignment="Center" FontSize="16" />
                             <TextBox HorizontalAlignment="Left" Text="Name" VerticalAlignment="Top" Width="222" Height="25" Foreground="#FF716E6E" />
                         </StackPanel>
                         <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Left" AutomationProperties.ItemType="int" Margin="0,0,0,10">
-                            <TextBlock HorizontalAlignment="Left" Text="Date of buirth:" VerticalAlignment="Center" Margin="0,0,0,5" FontSize="16" />
+                            <TextBlock HorizontalAlignment="Left" Text="Date of buirth:" VerticalAlignment="Center" FontSize="16" />
                             <syncfusion:UpDown Name="upDown" Value="2000" Width="100" Height="25"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="0,0,0,5">
-                            <TextBlock HorizontalAlignment="Left" Text="Sex:" VerticalAlignment="Center" Margin="0,0,5,5" FontSize="16" />
+                            <TextBlock HorizontalAlignment="Left" Text="Sex:" VerticalAlignment="Center" Margin="0,0,5,0" FontSize="16" />
                             <RadioButton VerticalAlignment="Center" Margin="0,0,5,0">Male</RadioButton>
                             <RadioButton VerticalAlignment="Center">Female</RadioButton>
                         </StackPanel>
-                        <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Left">
-                            <TextBlock HorizontalAlignment="Left" Text="Medicine List:" VerticalAlignment="Center" Margin="0,0,5,5" FontSize="16" />
-                            <ScrollViewer Height="50" Width="222" Name="MainBarScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" VerticalAlignment="Bottom" Background="#FFED635E" Foreground="White" BorderBrush="#FFED635E" HorizontalAlignment="Stretch" Margin="0,0,0,5">
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="0,0,0,5">
+                            <TextBlock HorizontalAlignment="Left" Text="Medicine List:" VerticalAlignment="Center" FontSize="16" />
+                            <ComboBox IsEditable="True"
+                              Width="222"
+                              Height="20"
+                              IsTextSearchEnabled="False"
+                              x:Name="cb"
+                              PreviewTextInput="Cb_OnPreviewTextInput"
+                              SelectionChanged="ComboboxMedicine_SelectionChanged">
+                            </ComboBox>
+
+                            <ScrollViewer Height="50" Width="222" Name="MainBarScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" VerticalAlignment="Bottom" Background="#e47872" Foreground="White" BorderBrush="#FFED635E" HorizontalAlignment="Stretch" Margin="0,0,0,5">
                                 <StackPanel x:Name="StackP1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="192" Height="Auto">
 
                                 </StackPanel>
                             </ScrollViewer>
                             <StackPanel Orientation="Horizontal">
-                                <Button HorizontalAlignment="Right" VerticalAlignment="Stretch" BorderBrush="{x:Null}" Foreground="{x:Null}" FontWeight="Bold" Width="20" Height="20" Click="BtnAddMedicine" AutomationProperties.HelpText="Add a Medicine">
-                                    <Button.Background>
+                                <!--<Button HorizontalAlignment="Right" VerticalAlignment="Stretch" BorderBrush="{x:Null}" Foreground="{x:Null}" FontWeight="Bold" Width="20" Height="20" Click="BtnAddMedicine" AutomationProperties.HelpText="Add a Medicine">
+                                    --><!--<Button.Background>
                                         <ImageBrush ImageSource="images/plusLogo.png"/>
-                                    </Button.Background>
-                                </Button>
+                                    </Button.Background>--><!--
+                                </Button>-->
                                 <Button HorizontalAlignment="Right" VerticalAlignment="Stretch" BorderBrush="{x:Null}" Foreground="{x:Null}" FontWeight="Bold" Width="20" Height="20" Click="BtnDelMedicine" AutomationProperties.HelpText="Remove a Medicine">
                                     <Button.Background>
                                         <ImageBrush ImageSource="images/MinusLogo.png"/>
@@ -50,18 +60,25 @@
                     </StackPanel>
                     <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="50,10,0,0">
                         <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Left">
-                            <TextBlock HorizontalAlignment="Left" Text="Medicine List:" VerticalAlignment="Center" Margin="0,0,5,5" FontSize="16" />
-                            <ScrollViewer Height="50" Width="222" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" VerticalAlignment="Bottom" Background="#FFED635E" Foreground="White" BorderBrush="#FFED635E" HorizontalAlignment="Stretch" Margin="0,0,0,5">
+                            <TextBlock HorizontalAlignment="Left" Text="Medical List:" VerticalAlignment="Center" Margin="0,0,5,5" FontSize="16" />
+                            <ComboBox IsEditable="True"
+                              Width="222"
+                              Height="20"
+                              IsTextSearchEnabled="False"
+                              x:Name="cbd"
+                              SelectionChanged="ComboboxDisaster_SelectionChanged">
+                            </ComboBox>
+                            <ScrollViewer Height="50" Width="222" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" VerticalAlignment="Bottom" Background="#e47872" Foreground="White" BorderBrush="#FFED635E" HorizontalAlignment="Stretch" Margin="0,0,0,5">
                                 <StackPanel x:Name="StackP2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="192" Height="Auto">
 
                                 </StackPanel>
                             </ScrollViewer>
                             <StackPanel Orientation="Horizontal">
-                                <Button HorizontalAlignment="Right" VerticalAlignment="Stretch" BorderBrush="{x:Null}" Foreground="{x:Null}" FontWeight="Bold" Width="20" Height="20" Click="BtnAddDisaster" AutomationProperties.HelpText="Add a Disaster">
+                                <!--<Button HorizontalAlignment="Right" VerticalAlignment="Stretch" BorderBrush="{x:Null}" Foreground="{x:Null}" FontWeight="Bold" Width="20" Height="20" Click="BtnAddDisaster" AutomationProperties.HelpText="Add a Disaster">
                                     <Button.Background>
                                         <ImageBrush ImageSource="images/plusLogo.png"/>
                                     </Button.Background>
-                                </Button>
+                                </Button>-->
                                 <Button HorizontalAlignment="Right" VerticalAlignment="Stretch" BorderBrush="{x:Null}" Foreground="{x:Null}" FontWeight="Bold" Width="20" Height="20" Click="BtnDelDisaster" AutomationProperties.HelpText="Remove a Disaster">
                                     <Button.Background>
                                         <ImageBrush ImageSource="images/MinusLogo.png"/>

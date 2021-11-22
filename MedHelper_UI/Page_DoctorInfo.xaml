@@ -1,0 +1,45 @@
+﻿<Page x:Class="MedHelper_UI.Page_DoctorInfo"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MedHelper_UI"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Page_DoctorInfo">
+
+    <Grid>
+        <Image Source="images/MedHelperTitle.png" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="60,-60,60,0"></Image>
+
+            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Width="350" Height="150" Orientation="Horizontal">
+            <StackPanel.Background>
+                <SolidColorBrush Color="#FFED635E" Opacity="0.7"/>
+            </StackPanel.Background>
+            <StackPanel HorizontalAlignment="Left" Width="175" Height="150" >
+                <Image Source="images/DoctorLogo.png" Width="100" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0"></Image>
+                <Button Content="Add Patient" MinHeight="25" HorizontalAlignment="Center" MinWidth="100" VerticalAlignment="Bottom" BorderBrush="White" Background="#FF56C1CA" Foreground="White" FontSize="16" FontWeight="Bold" Height="31" Width="80" Margin="0,10,0,0" Click="BtmAddPatientClick"/>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Right" Width="175">
+                <TextBlock Name="username" HorizontalAlignment="Center" Text="TestUserName" VerticalAlignment="Center" Margin="0,10,0,10" FontSize="16" />
+                <TextBlock Name="firstlastname" HorizontalAlignment="Center" Text=" FirstName LastName " VerticalAlignment="Center" Margin="0,5,0,0" FontSize="16" Foreground="#FF54B1B9" FontWeight="Bold" Background="White" />
+                <TextBlock Name="email" HorizontalAlignment="Center" Text="test@gmail.com" VerticalAlignment="Center" FontSize="16" Foreground="White" Margin="0,0,0,5" />
+                <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderBrush="{x:Null}" Foreground="{x:Null}" FontWeight="Normal" Width="45" Margin="0,5,20,0" Height="45" Click="BtmEditClick">
+                    <Button.Background>
+                        <ImageBrush ImageSource="images/EditLogo.png"/>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Center"  VerticalAlignment="Bottom">
+            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Orientation="Horizontal" Background="#FFED635E" Width="400">
+                <Image Source="images/SearchLogo.png" Width="30" Height="30" HorizontalAlignment="Left" Margin="5,0,0,0"></Image>
+                <TextBox Width="100" Height="20" Margin="0,0,5,0"></TextBox>
+                <Button Content="Search" MinHeight="20" HorizontalAlignment="Stretch" MinWidth="100" VerticalAlignment="Stretch" BorderBrush="White" Background="#FF56C1CA" Foreground="White" FontSize="14" FontWeight="Normal" Height="20" Width="50"/>
+            </StackPanel>
+            <ScrollViewer Height="120" Width="400" Name="MainBarScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" VerticalAlignment="Bottom" Margin="0,0,0,40" Background="#FFED635E" Foreground="White" BorderBrush="#FFED635E" HorizontalAlignment="Stretch">
+                <StackPanel x:Name="StackP" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="370" Height="Auto">
+                </StackPanel>
+            </ScrollViewer>
+        </StackPanel>
+    </Grid>
+</Page>

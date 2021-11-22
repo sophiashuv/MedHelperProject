@@ -1,0 +1,41 @@
+﻿<Page x:Class="MedHelper_UI.Page_signIn"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MedHelper_UI"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Page_signIn">
+
+    <Grid Margin="10,0,0,0">
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="50,10,50,0">
+            <TextBlock HorizontalAlignment="Left" Margin="10,0,10,5" Text="Log in:" VerticalAlignment="Top" MinWidth="100" FontSize="36" FontWeight="Bold" Foreground="#FFED635E"/>
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Background="#FF56C1CA" Margin="0,0,0,50" Height="270">
+                <StackPanel Orientation="Horizontal" Margin="50,0,50,0" VerticalAlignment="Top">
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="30,10,0,0">
+                        <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="0,10,0,10">
+                            <TextBlock HorizontalAlignment="Left" Text="Username or email address:" VerticalAlignment="Center" Margin="0,0,0,5" FontSize="16" />
+                            <TextBox Name="email" HorizontalAlignment="Left" Text="example@email.com" VerticalAlignment="Top" Width="222" Height="25" Foreground="#FF716E6E" />
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="0,20,0,10">
+                            <TextBlock HorizontalAlignment="Left" Text="Your password:" VerticalAlignment="Center" Margin="0,0,0,5" FontSize="16" />
+                            <PasswordBox Name="password" HorizontalAlignment="Left" VerticalAlignment="Top" Width="222" Height="25" Foreground="#FF716E6E" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"  VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,5,0,5">
+                            <Button Content="Sign in" MinHeight="25" HorizontalAlignment="Left" MinWidth="70" VerticalAlignment="Stretch" BorderBrush="White" Background="#FFED635E" Foreground="White" FontSize="16" FontWeight="Bold" Height="31" Width="80" Margin="0,5,0,5" Click="BtmClickSignInPage"/>
+                            <TextBlock HorizontalAlignment="Left" Text="I forgot my password" VerticalAlignment="Bottom" Margin="10,0,0,5" FontSize="14" TextDecorations="Underline" Foreground="#FF000566" />
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical"  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="50,20,0,50">
+                        <TextBlock HorizontalAlignment="Left" Text="ARE YOU NEW HERE?" VerticalAlignment="Center" MinWidth="210" Margin="10,0,0,5" FontSize="22" TextDecorations="{x:Null}" Foreground="#FFED635E" FontWeight="Normal" />
+                        <StackPanel Height="50" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,0">
+                            <Image Source="images/MedHelperSignUp.jpg" VerticalAlignment="Center" HorizontalAlignment="Left" Height="50" Width="50"></Image>
+                            <Button Content="Sign up" MinHeight="25" HorizontalAlignment="Right" MinWidth="70" VerticalAlignment="Stretch" BorderBrush="White" Background="#FFED635E" Foreground="White" FontSize="16" FontWeight="Bold" Height="31" Width="80" Margin="10,0,0,0" Click="BtmClickRegisterSignInPage" />
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

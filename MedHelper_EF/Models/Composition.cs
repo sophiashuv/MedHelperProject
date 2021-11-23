@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MedHelper_EF.Models
 {
-    public partial class Composition
+    public partial class Composition: BaseEntity
     {
         public Composition()
         {

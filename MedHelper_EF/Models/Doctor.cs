@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MedHelper_EF.Models
 {
-    public partial class Doctor
+    public partial class Doctor: BaseEntity
     {
         public Doctor()
         {

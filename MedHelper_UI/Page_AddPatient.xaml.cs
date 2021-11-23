@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,61 +20,59 @@ namespace MedHelper_UI
     /// <summary>
     /// Interaction logic for Page_AddPatient.xaml
     /// </summary>
-    public partial class Page_AddPatient : Page
+    public partial class Page_AddPatient : Page, INotifyPropertyChanged
     {
         public Page_Doctor MainWindow;
-        public List<TextBox> textBoxesMedicine;
-        public List<TextBox> textBoxesDisasters;
+        public List<TextBlock> textBoxesMedicine = new List<TextBlock>();
+        public List<TextBlock> textBoxesDisasters = new List<TextBlock>();
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public Page_AddPatient(Page_Doctor mainWindow)
         {
+            
             InitializeComponent();
             MainWindow = mainWindow;
 
-            var textBox = CreateTextBox();
-            textBoxesMedicine = new List<TextBox> { textBox };
-            StackP1.Children.Add(textBox);
+            for (var i = 0; i < 1000; i++)
+            {
+                cb.Items.Add($"Medicine {i}");
+            }
 
-            var textBox2 = CreateTextBox("Disaster");
-            textBoxesDisasters = new List<TextBox> { textBox2 };
-            StackP2.Children.Add(textBox2);
+            for (var i = 0; i < 1000; i++)
+            {
+                cbd.Items.Add($"Disaster {i}");
+            }
         }
 
-        public static TextBox CreateTextBox(String text= "Medicine")
+
+        private void Cb_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            TextBox textBox = new TextBox();
-            textBox.Text = text;
-            textBox.Width = 222;
-            textBox.Height = 25;
-            textBox.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF716E6E"));
-            return textBox;
+            cb.IsDropDownOpen = true;
         }
 
-        private void BtnAddMedicine(object sender, RoutedEventArgs e)
+        public static TextBlock CreateTextBlock(String text)
         {
-            var textBox = CreateTextBox();
-            textBoxesMedicine.Add(textBox);
-            StackP1.Children.Add(textBox);
+            TextBlock textBolock = new TextBlock();
+            textBolock.Text = text;
+            textBolock.Width = 222;
+            textBolock.Height = 25;
+            textBolock.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff"));
+            return textBolock;
         }
 
         private void BtnDelMedicine(object sender, RoutedEventArgs e)
         {
-            if (textBoxesMedicine.Count > 1)
+            if (textBoxesMedicine.Count != 0)
             {
                 textBoxesMedicine.Remove(textBoxesMedicine[textBoxesMedicine.Count - 1]);
                 StackP1.Children.Remove(StackP1.Children[textBoxesMedicine.Count]);
             }
         }
 
-        private void BtnAddDisaster(object sender, RoutedEventArgs e)
-        {
-            var textBox = CreateTextBox("Disaster");
-            textBoxesDisasters.Add(textBox);
-            StackP2.Children.Add(textBox);
-        }
-
         private void BtnDelDisaster(object sender, RoutedEventArgs e)
         {
-            if (textBoxesDisasters.Count > 1)
+            if (textBoxesDisasters.Count != 0)
             {
                 textBoxesDisasters.Remove(textBoxesDisasters[textBoxesDisasters.Count - 1]);
                 StackP2.Children.Remove(StackP2.Children[textBoxesDisasters.Count]);
@@ -82,6 +82,28 @@ namespace MedHelper_UI
         private void BtmAddPatientToDb(object sender, RoutedEventArgs e)
         {
             MainWindow.DoctorFrame.Content = new Page_DoctorInfo(MainWindow);
+        }
+
+        private void ComboboxMedicine_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cb.SelectedItem != null)
+            {
+                var selectedTMedicine = (String)cb.SelectedItem;
+                var textBlock = CreateTextBlock(selectedTMedicine);
+                StackP1.Children.Add(textBlock);
+                textBoxesMedicine.Add(textBlock);
+            }
+        }
+
+        private void ComboboxDisaster_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbd.SelectedItem != null)
+            {
+                var selectedTMedicine = (String)cbd.SelectedItem;
+                var textBlock = CreateTextBlock(selectedTMedicine);
+                StackP2.Children.Add(textBlock);
+                textBoxesDisasters.Add(textBlock);
+            }
         }
     }
 }

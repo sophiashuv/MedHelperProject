@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +23,6 @@ namespace MedHelper_UI
     /// </summary>
     public partial class Page_DoctorInfo : Page
     {
-        
         public Page_Doctor MainWindow;
         public List<String> patients = new List<string> { "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3" };
         public List<Button> buttons;
@@ -33,7 +32,6 @@ namespace MedHelper_UI
             MainWindow = mainWindow;
             buttons = new List<Button>(patients.Count);
             setInformation();
-
             var height = 30;
             for (int i = 0; i < patients.Count(); i++)
             {

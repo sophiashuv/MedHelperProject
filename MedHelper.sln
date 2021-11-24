@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedHelper_WPF", "MedHelper_
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedHelper_UI", "MedHelper_UI\MedHelper_UI.csproj", "{4E1E05A6-9314-463B-B1C1-2EAD5B5283EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedHelper_API", "MedHelper_API\MedHelper_API.csproj", "{19491120-AFBA-439A-AA32-C3283B2F3300}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedHelper_API", "MedHelper_API\MedHelper_API.csproj", "{19491120-AFBA-439A-AA32-C3283B2F3300}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

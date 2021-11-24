@@ -48,5 +48,14 @@ namespace MedHelper_API.Controllers
                 return Unauthorized(e.Message);
             }
         }
+
+        [HttpGet("getInfo")]
+        public async Task<ActionResult<AuthResponse>> getInfo()
+        {
+            var id = GetCurrentUserId();
+            var response = await _authService.getInfo(id);
+
+            return StatusCode(201, response);
+        }
     }
 }

@@ -1,6 +1,9 @@
-﻿using System;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,11 +23,17 @@ namespace MedHelper_UI
     /// </summary>
     public partial class Page_Doctor : Page
     {
+        private HttpClient client = new HttpClient();
+        public MainWindow mainWindow;
         public List<String> patients = new List<string> { "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3" };
         public List<Button> buttons;
-        public Page_Doctor()
+        public string username;
+        public string email;
+        public string firstlastname;
+        public Page_Doctor(MainWindow mainWindow)
         {
             InitializeComponent();
+            this.mainWindow = mainWindow;
             Loaded += DoctorWindow_Loaded;
 
           
@@ -43,12 +52,23 @@ namespace MedHelper_UI
                 StackP.Children.Add(buttons[i]);
             }
         }
-
+        private void setInformation()
+        {
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", mainWindow.token);
+            var response = client.GetAsync("https://localhost:44374/api/v1/auth/getInfo");
+            response.Wait();
+            if (response.Result.IsSuccessStatusCode)
+            {
+                var res = JsonConvert.DeserializeObject<dynamic>(response.Result.Content.ReadAsStringAsync().Result);
+                firstlastname = res.result.lastName + " " + res.result.firstName;
+                email = res.result.email;
+                username = "А в модельці цього поля немаа";
+            }
+        }
         private void DoctorWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            setInformation();
             DoctorFrame.Content = new Page_DoctorInfo(this);
-          
-            
         }
 
     }

@@ -20,6 +20,7 @@ namespace MedHelper_UI
     /// </summary>
     public partial class MainWindow : Window
     {
+        public string token;
         public MainWindow()
         {
             InitializeComponent();

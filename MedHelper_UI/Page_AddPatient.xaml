@@ -8,7 +8,6 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Page_AddPatient">
 
-
     <Grid Margin="10,0,0,0">
         <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="50,10,50,0">
             <TextBlock HorizontalAlignment="Left" Margin="10,0,10,5" Text="Add Patient:" VerticalAlignment="Top" MinWidth="100" FontSize="36" FontWeight="Bold" Foreground="#FFED635E"/>
@@ -45,6 +44,7 @@
                                 </StackPanel>
                             </ScrollViewer>
                             <StackPanel Orientation="Horizontal">
+
                                 <!--<Button HorizontalAlignment="Right" VerticalAlignment="Stretch" BorderBrush="{x:Null}" Foreground="{x:Null}" FontWeight="Bold" Width="20" Height="20" Click="BtnAddMedicine" AutomationProperties.HelpText="Add a Medicine">
                                     --><!--<Button.Background>
                                         <ImageBrush ImageSource="images/plusLogo.png"/>

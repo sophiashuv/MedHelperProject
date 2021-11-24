@@ -20,9 +20,9 @@
                 <Button Content="Add Patient" MinHeight="25" HorizontalAlignment="Center" MinWidth="100" VerticalAlignment="Bottom" BorderBrush="White" Background="#FF56C1CA" Foreground="White" FontSize="16" FontWeight="Bold" Height="31" Width="80" Margin="0,10,0,0" Click="BtmAddPatientClick"/>
             </StackPanel>
             <StackPanel HorizontalAlignment="Right" Width="175">
-                <TextBlock HorizontalAlignment="Center" Text="TestUserName" VerticalAlignment="Center" Margin="0,10,0,10" FontSize="16" />
-                <TextBlock HorizontalAlignment="Center" Text=" FirstName LastName " VerticalAlignment="Center" Margin="0,5,0,0" FontSize="16" Foreground="#FF54B1B9" FontWeight="Bold" Background="White" />
-                <TextBlock HorizontalAlignment="Center" Text="test@gmail.com" VerticalAlignment="Center" FontSize="16" Foreground="White" Margin="0,0,0,5" />
+                <TextBlock Name="username" HorizontalAlignment="Center" Text="TestUserName" VerticalAlignment="Center" Margin="0,10,0,10" FontSize="16" />
+                <TextBlock Name="firstlastname" HorizontalAlignment="Center" Text=" FirstName LastName " VerticalAlignment="Center" Margin="0,5,0,0" FontSize="16" Foreground="#FF54B1B9" FontWeight="Bold" Background="White" />
+                <TextBlock Name="email" HorizontalAlignment="Center" Text="test@gmail.com" VerticalAlignment="Center" FontSize="16" Foreground="White" Margin="0,0,0,5" />
                 <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderBrush="{x:Null}" Foreground="{x:Null}" FontWeight="Normal" Width="45" Margin="0,5,20,0" Height="45" Click="BtmEditClick">
                     <Button.Background>
                         <ImageBrush ImageSource="images/EditLogo.png"/>

@@ -1,6 +1,9 @@
-﻿using System;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,7 +23,6 @@ namespace MedHelper_UI
     /// </summary>
     public partial class Page_DoctorInfo : Page
     {
-
         public Page_Doctor MainWindow;
         public List<String> patients = new List<string> { "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3" };
         public List<Button> buttons;
@@ -29,8 +31,7 @@ namespace MedHelper_UI
             InitializeComponent();
             MainWindow = mainWindow;
             buttons = new List<Button>(patients.Count);
-
-
+            setInformation();
             var height = 30;
             for (int i = 0; i < patients.Count(); i++)
             {
@@ -44,6 +45,12 @@ namespace MedHelper_UI
             }
         }
 
+        private void setInformation()
+        {
+            firstlastname.Text = MainWindow.firstlastname;
+            email.Text = MainWindow.email;
+            username.Text = MainWindow.username;
+        }
         private void BtmEditClick(object sender, RoutedEventArgs e)
         {
             MainWindow.DoctorFrame.Content = new Page_EditInfo(MainWindow);

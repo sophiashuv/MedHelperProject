@@ -4,15 +4,17 @@ using System.Collections.Generic;
 using MedHelper_EF.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace MedHelper_EF.Migrations
 {
     [DbContext(typeof(MedHelperDB))]
-    partial class MedHelperDBModelSnapshot : ModelSnapshot
+    [Migration("20211125140541_AddedPatientMedicineIds")]
+    partial class AddedPatientMedicineIds
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

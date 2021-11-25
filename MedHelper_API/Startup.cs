@@ -46,6 +46,7 @@ namespace MedHelper_API
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IPatientRepository, PatientRepository>();
             services.AddScoped<IMedicineRepository, MedicineRepository>();
+            services.AddScoped<IDiseaseRepository, DiseaseRepository>();
             
             // Services
             services.AddScoped<IPatientService, PatientService>();

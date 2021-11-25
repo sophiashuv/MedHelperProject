@@ -16,5 +16,9 @@ namespace MedHelper_API.Dto.Patient
 
         [Required] 
         public List<int> MedicineIds { get; set; }
+        
+        [Required] 
+        public List<int> DiseasesIds { get; set; }
+        
     }
 }

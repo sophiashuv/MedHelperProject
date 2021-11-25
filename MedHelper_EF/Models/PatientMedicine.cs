@@ -9,8 +9,8 @@ namespace MedHelper_EF.Models
     public partial class PatientMedicine
     {
         public int PatientMedicineID { get; set; }
-        public Nullable<int> MedicineID { get; set; }
-        public Nullable<int> PatientID { get; set; }
+        public int MedicineID { get; set; }
+        public int PatientID { get; set; }
 
         public virtual Medicine Medicine { get; set; }
         public virtual Patient Patient { get; set; }

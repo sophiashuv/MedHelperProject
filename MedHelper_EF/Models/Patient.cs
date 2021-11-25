@@ -18,8 +18,6 @@ namespace MedHelper_EF.Models
         public string UserName { get; set; }
         public string Gender { get; set; }
         public int DoctorID { get; set; }
-        public List<int> MedicineIds { get; set; }
-        public List<int> DiseasesIds { get; set; }
         public System.DateTime Birthdate { get; set; }
 
         public virtual Doctor Doctor { get; set; }

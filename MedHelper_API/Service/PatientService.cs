@@ -29,30 +29,47 @@ namespace MedHelper_API.Service
         public async Task<PatientResponse> GetOne(int patientId, int userId)
         {
             var patient = await _patientRepository.GetPatient(userId, patientId);
+  
             var result = _mapper.Map<PatientResponse>(patient);
-            var medicines = await _medicineRepository.GetByIds(patient.MedicineIds);
-            var diseases = await _diseaseRepository.GetByIds(patient.DiseasesIds);
-            
-            result.Medicines = medicines.Select(o => _mapper.Map<MedicineResponse>(o)).ToList();
-            result.Diseases = diseases.Select(d => _mapper.Map<DiseaseResponse>(d)).ToList();
-
+            result.Medicines = new List<MedicineResponse>();
+            result.Diseases = new List<DiseaseResponse>();
+            foreach (var patientMedicine in patient.PatientMedicines)
+            {
+                var objMedicine = await _medicineRepository.GetById(patientMedicine.MedicineID);
+                result.Medicines.Add(_mapper.Map<MedicineResponse>(objMedicine));
+            }
+                
+            foreach (var patientDisease in patient.PatientDiseases)
+            {
+                var objMedicine = await _diseaseRepository.GetById(patientDisease.DiseaseID);
+                result.Diseases.Add(_mapper.Map<DiseaseResponse>(objMedicine));
+            }
             return result;
         }
 
         public async Task<List<PatientResponse>> GetAll(int userId)
         {
-            var patient = await _patientRepository.GetAll(userId);
-
+            var patients = await _patientRepository.GetAll(userId);
             var response = new List<PatientResponse>();
-            foreach (var p in patient)
+            
+            foreach (var patient in patients)
             {
-                var obj = _mapper.Map<PatientResponse>(p);
-                var medicines = await _medicineRepository.GetByIds(p.MedicineIds);
-                var diseases = await _diseaseRepository.GetByIds(p.DiseasesIds);
+                var obj = _mapper.Map<PatientResponse>(patient);
+                obj.Medicines = new List<MedicineResponse>();
+                obj.Diseases = new List<DiseaseResponse>();
                 
-                obj.Medicines =  medicines.Select(o => _mapper.Map<MedicineResponse>(o)).ToList();
-                obj.Diseases = diseases.Select(d => _mapper.Map<DiseaseResponse>(d)).ToList();
+                foreach (var patientMedicine in patient.PatientMedicines)
+                {
+                    var objMedicine = await _medicineRepository.GetById(patientMedicine.MedicineID);
+                    obj.Medicines.Add(_mapper.Map<MedicineResponse>(objMedicine));
+                }
                 
+                foreach (var patientDisease in patient.PatientDiseases)
+                {
+                    var objMedicine = await _diseaseRepository.GetById(patientDisease.DiseaseID);
+                    obj.Diseases.Add(_mapper.Map<DiseaseResponse>(objMedicine));
+                }
+
                 response.Add(obj);
             }
 

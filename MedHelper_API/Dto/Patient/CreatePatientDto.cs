@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MedHelper_API.Dto.Patient
@@ -12,5 +13,8 @@ namespace MedHelper_API.Dto.Patient
         
         [Required] 
         public System.DateTime Birthdate { get; set; }
+
+        [Required] 
+        public List<int> MedicineIds { get; set; }
     }
 }

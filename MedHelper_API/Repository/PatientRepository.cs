@@ -24,8 +24,8 @@ namespace MedHelper_API.Repository
 
         public async Task<Patient> GetPatient(int userId, int patientId)
         {
-            // var result = await _context.Patients.FirstOrDefaultAsync(obj =>
-            //     obj.PatientID == patientId && obj.DoctorID == userId);
+            var result = await _context.Patients.FirstOrDefaultAsync(obj =>
+                obj.PatientID == patientId && obj.DoctorID == userId);
             //
             // // Console.WriteLine(result.);
             // var sql =

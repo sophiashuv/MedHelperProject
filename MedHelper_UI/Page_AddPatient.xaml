@@ -16,16 +16,16 @@
                     <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="30,10,0,0">
                         <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="0,0,0,10">
                             <TextBlock HorizontalAlignment="Left" Text="Patient Name:" VerticalAlignment="Center" FontSize="16" />
-                            <TextBox HorizontalAlignment="Left" Text="Name" VerticalAlignment="Top" Width="222" Height="25" Foreground="#FF716E6E" />
+                            <TextBox Name="username" HorizontalAlignment="Left" Text="Name" VerticalAlignment="Top" Width="222" Height="25" Foreground="#FF716E6E" />
                         </StackPanel>
                         <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Left" AutomationProperties.ItemType="int" Margin="0,0,0,10">
                             <TextBlock HorizontalAlignment="Left" Text="Date of buirth:" VerticalAlignment="Center" FontSize="16" />
-                            <syncfusion:UpDown Name="upDown" Value="2000" Width="100" Height="25"/>
+                            <DatePicker Name="date" Width="150" Height="25"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="0,0,0,5">
                             <TextBlock HorizontalAlignment="Left" Text="Sex:" VerticalAlignment="Center" Margin="0,0,5,0" FontSize="16" />
-                            <RadioButton VerticalAlignment="Center" Margin="0,0,5,0">Male</RadioButton>
-                            <RadioButton VerticalAlignment="Center">Female</RadioButton>
+                            <RadioButton Name="male" VerticalAlignment="Center" Margin="0,0,5,0">Male</RadioButton>
+                            <RadioButton Name="female" VerticalAlignment="Center">Female</RadioButton>
                         </StackPanel>
                         <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="0,0,0,5">
                             <TextBlock HorizontalAlignment="Left" Text="Medicine List:" VerticalAlignment="Center" FontSize="16" />

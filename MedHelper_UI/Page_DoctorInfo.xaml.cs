@@ -25,6 +25,7 @@ namespace MedHelper_UI
     {
         public Page_Doctor MainWindow;
         public List<String> patients = new List<string> { "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3" };
+        private List<String> found = new List<string>();
         public List<Button> buttons;
         public Page_DoctorInfo(Page_Doctor mainWindow)
         {
@@ -32,19 +33,27 @@ namespace MedHelper_UI
             MainWindow = mainWindow;
             buttons = new List<Button>(patients.Count);
             setInformation();
+            Search();
+           
+        }
+        private void Search()
+        {
+            StackP.Children.Clear();
+            buttons.Clear();
+            found = patients.FindAll(x => x.Contains(FindResults.Text));
             var height = 30;
-            for (int i = 0; i < patients.Count(); i++)
+            for (int i = 0; i < found.Count(); i++)
             {
                 buttons.Add(new Button());
-                buttons[i].Content = patients[i];
+                buttons[i].Content = found[i];
                 buttons[i].Height = height;
                 buttons[i].Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF56C1CA"));
                 buttons[i].Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff"));
                 buttons[i].BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff"));
                 StackP.Children.Add(buttons[i]);
             }
+            FindResults.Text = "";
         }
-
         private void setInformation()
         {
             firstlastname.Text = MainWindow.firstlastname;
@@ -59,6 +68,11 @@ namespace MedHelper_UI
         private void BtmAddPatientClick(object sender, RoutedEventArgs e)
         {
             MainWindow.DoctorFrame.Content = new Page_AddPatient(MainWindow);
+        }
+
+        private void BtmSearch_Click(object sender, RoutedEventArgs e)
+        {
+            Search();
         }
     }
 }

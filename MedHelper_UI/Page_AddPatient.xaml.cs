@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,6 +25,7 @@ namespace MedHelper_UI
     /// </summary>
     public partial class Page_AddPatient : Page, INotifyPropertyChanged
     {
+        private HttpClient client = new HttpClient();
         public Page_Doctor MainWindow;
         public List<TextBlock> textBoxesMedicine = new List<TextBlock>();
         public List<TextBlock> textBoxesDisasters = new List<TextBlock>();
@@ -78,9 +82,47 @@ namespace MedHelper_UI
                 StackP2.Children.Remove(StackP2.Children[textBoxesDisasters.Count]);
             }
         }
+        private void AddDesease()
+        {
+            //TODO дописати
+        }
+        private void AddMedicine()
+        {
+            //TODO дописати
+        }
 
+        private void AddPatient()
+        {
+            var sex = "";
+            if((bool)male.IsChecked)
+            {
+                sex = "one";
+            }
+            else if((bool)female.IsChecked)
+            {
+                sex = "two";
+            }
+            else
+            {
+                //показати шо треба вибрати
+            }
+            var str = "{\n" + $"\"UserName\": \"{username.Text}\",\n" +
+                      $"\"Gender\": \"{sex}\",\n" +
+                      $"\"Birthdate\": {JsonConvert.SerializeObject(date.SelectedDate.Value)}\n" + "}";
+            var httpContent = new StringContent(str, Encoding.UTF8,
+                                    "application/json");
+            httpContent.Headers.ContentType.MediaType = "application/json";
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", MainWindow.mainWindow.token);
+            var response = client.PostAsync("https://localhost:44374/api/v1/patient", httpContent);
+            response.Wait();
+            if(response.Result.IsSuccessStatusCode)
+            {
+                
+            }
+        }
         private void BtmAddPatientToDb(object sender, RoutedEventArgs e)
         {
+            AddPatient();
             MainWindow.DoctorFrame.Content = new Page_DoctorInfo(MainWindow);
         }
 

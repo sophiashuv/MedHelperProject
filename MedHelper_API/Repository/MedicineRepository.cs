@@ -13,11 +13,11 @@ namespace MedHelper_API.Repository
         {
         }
 
-        public async Task<List<Medicine>> GetByIds(List<int> ids)
+        public async Task<Medicine> GetMedicineWithInclude(int id)
         {
-            var result = await _context.Medicines.Where(obj => ids.Contains(obj.MedicineID)).ToListAsync();
-
-            return result;
+            return await _context.Medicines
+                .Include(obj => obj.MedicineCompositions)
+                .Include(obj => obj.MedicineContraindications)
         }
     }
 }

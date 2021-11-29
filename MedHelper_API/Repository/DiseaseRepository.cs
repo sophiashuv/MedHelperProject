@@ -12,12 +12,5 @@ namespace MedHelper_API.Repository
         public DiseaseRepository(MedHelperDB context) : base(context)
         {
         }
-        
-        public async Task<List<Disease>> GetByIds(List<int> ids)
-        {
-            var result = await _context.Diseases.Where(obj => ids.Contains(obj.DiseaseID)).ToListAsync();
-
-            return result;
-        }
     }
 }

@@ -4,8 +4,8 @@ using MedHelper_EF.Models;
 
 namespace MedHelper_API.Repository.Contracts
 {
-    public interface IMedicineRepository: IBaseRepository<Medicine>
+    public interface IDataRepository
     {
-        Task<Medicine> GetMedicineWithInclude(int id);
+        Task<TEntity> GetTEntityById<TEntity>(int id);
     }
 }

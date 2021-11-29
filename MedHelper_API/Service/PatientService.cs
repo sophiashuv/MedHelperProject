@@ -36,7 +36,10 @@ namespace MedHelper_API.Service
             foreach (var patientMedicine in patient.PatientMedicines)
             {
                 var objMedicine = await _medicineRepository.GetById(patientMedicine.MedicineID);
-                result.Medicines.Add(_mapper.Map<MedicineResponse>(objMedicine));
+                var medicineResponse = _mapper.Map<MedicineResponse>(objMedicine);
+                medicineResponse.Compositions
+                result.Medicines.Add(medicineResponse);
+                
             }
                 
             foreach (var patientDisease in patient.PatientDiseases)

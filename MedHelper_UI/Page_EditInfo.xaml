@@ -32,16 +32,16 @@
                     </StackPanel>
                     <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="50,10,0,0">
                         <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="0,0,0,10">
-                            <TextBlock HorizontalAlignment="Left" Text="User name:" VerticalAlignment="Center" Margin="0,0,0,5" FontSize="16" />
-                            <TextBox HorizontalAlignment="Left" Text="User Name" VerticalAlignment="Top" Width="222" Height="25" Foreground="#FF716E6E" />
+                            <TextBlock HorizontalAlignment="Left" Text="Your current password" VerticalAlignment="Center" Margin="0,0,0,5" FontSize="16" />
+                            <PasswordBox Name="password" HorizontalAlignment="Left" VerticalAlignment="Top" Width="222" Height="25" Foreground="#FF716E6E"  />
                         </StackPanel>
                         <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="0,0,0,10">
-                            <TextBlock HorizontalAlignment="Left" Text="Your password:" VerticalAlignment="Center" Margin="0,0,0,5" FontSize="16" />
-                            <PasswordBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="222" Height="25" />
+                            <TextBlock HorizontalAlignment="Left" Text="Your new password:" VerticalAlignment="Center" Margin="0,0,0,5" FontSize="16" />
+                            <PasswordBox Name="newpass" HorizontalAlignment="Left" VerticalAlignment="Top" Width="222" Height="25" />
                         </StackPanel>
                         <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Left">
-                            <TextBlock HorizontalAlignment="Left" Text="Confirm password:" VerticalAlignment="Center" Margin="0,0,0,5" FontSize="16" />
-                            <PasswordBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="222" Height="25" />
+                            <TextBlock HorizontalAlignment="Left" Text="Confirm new password:" VerticalAlignment="Center" Margin="0,0,0,5" FontSize="16" />
+                            <PasswordBox Name="confirm" HorizontalAlignment="Left" VerticalAlignment="Top" Width="222" Height="25" />
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MedHelper_EF.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,6 +28,8 @@ namespace MedHelper_UI
     {
         private HttpClient client = new HttpClient();
         public Page_Doctor MainWindow;
+        private List<int> medecine = new List<int>();
+        private List<int> diseases = new List<int>();
         public List<TextBlock> textBoxesMedicine = new List<TextBlock>();
         public List<TextBlock> textBoxesDisasters = new List<TextBlock>();
 
@@ -37,16 +40,17 @@ namespace MedHelper_UI
             
             InitializeComponent();
             MainWindow = mainWindow;
+            setMedicine();
+            setDiseases();
+            //for (var i = 0; i < 1000; i++)
+            //{
+            //    cb.Items.Add($"Medicine {i}");
+            //}
 
-            for (var i = 0; i < 1000; i++)
-            {
-                cb.Items.Add($"Medicine {i}");
-            }
-
-            for (var i = 0; i < 1000; i++)
-            {
-                cbd.Items.Add($"Disaster {i}");
-            }
+            //for (var i = 0; i < 1000; i++)
+            //{
+            //    cbd.Items.Add($"Disaster {i}");
+            //}
         }
 
 
@@ -55,6 +59,34 @@ namespace MedHelper_UI
             cb.IsDropDownOpen = true;
         }
 
+        private void setMedicine()
+        {
+            var responseMedicine = client.GetAsync("https://localhost:44374/api/v1/medicines");
+            responseMedicine.Wait();
+            if (responseMedicine.Result.IsSuccessStatusCode)
+            {
+                var res = JsonConvert.DeserializeObject<dynamic>(responseMedicine.Result.Content.ReadAsStringAsync().Result);
+                var medicines= res.result;
+                foreach (var item in medicines)
+                {
+                    cb.Items.Add(JsonConvert.DeserializeObject<Medicine>(item.ToString()));
+                }
+            }
+        }
+        private void setDiseases()
+        {
+            var responseMedicine = client.GetAsync("https://localhost:44374/api/v1/diseases");
+            responseMedicine.Wait();
+            if (responseMedicine.Result.IsSuccessStatusCode)
+            {
+                var res = JsonConvert.DeserializeObject<dynamic>(responseMedicine.Result.Content.ReadAsStringAsync().Result);
+                var deseases = res.result;
+                foreach (var item in deseases)
+                {
+                    cbd.Items.Add(JsonConvert.DeserializeObject<Disease>(item.ToString()));
+                }
+            }
+        }
         public static TextBlock CreateTextBlock(String text)
         {
             TextBlock textBolock = new TextBlock();
@@ -69,6 +101,7 @@ namespace MedHelper_UI
         {
             if (textBoxesMedicine.Count != 0)
             {
+                medecine.RemoveAt(textBoxesMedicine.Count - 1);
                 textBoxesMedicine.Remove(textBoxesMedicine[textBoxesMedicine.Count - 1]);
                 StackP1.Children.Remove(StackP1.Children[textBoxesMedicine.Count]);
             }
@@ -78,17 +111,10 @@ namespace MedHelper_UI
         {
             if (textBoxesDisasters.Count != 0)
             {
+                diseases.RemoveAt(textBoxesDisasters.Count - 1);
                 textBoxesDisasters.Remove(textBoxesDisasters[textBoxesDisasters.Count - 1]);
                 StackP2.Children.Remove(StackP2.Children[textBoxesDisasters.Count]);
             }
-        }
-        private void AddDesease()
-        {
-            //TODO дописати
-        }
-        private void AddMedicine()
-        {
-            //TODO дописати
         }
 
         private void AddPatient()
@@ -106,8 +132,11 @@ namespace MedHelper_UI
             {
                 //показати шо треба вибрати
             }
+
             var str = "{\n" + $"\"UserName\": \"{username.Text}\",\n" +
                       $"\"Gender\": \"{sex}\",\n" +
+                      $"\"MedicineIds\": {JsonConvert.SerializeObject(medecine)},\n" +
+                      $"\"DiseasesIds\": {JsonConvert.SerializeObject(diseases)},\n" +
                       $"\"Birthdate\": {JsonConvert.SerializeObject(date.SelectedDate.Value)}\n" + "}";
             var httpContent = new StringContent(str, Encoding.UTF8,
                                     "application/json");
@@ -117,21 +146,22 @@ namespace MedHelper_UI
             response.Wait();
             if(response.Result.IsSuccessStatusCode)
             {
-                
+                MainWindow.DoctorFrame.Content = new Page_DoctorInfo(MainWindow);
             }
         }
         private void BtmAddPatientToDb(object sender, RoutedEventArgs e)
         {
             AddPatient();
-            MainWindow.DoctorFrame.Content = new Page_DoctorInfo(MainWindow);
+
         }
 
         private void ComboboxMedicine_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cb.SelectedItem != null)
             {
-                var selectedTMedicine = (String)cb.SelectedItem;
-                var textBlock = CreateTextBlock(selectedTMedicine);
+                var selectedTMedicine = (Medicine)cb.SelectedItem;
+                var textBlock = CreateTextBlock(selectedTMedicine.ToString());
+                medecine.Add(selectedTMedicine.MedicineID);
                 StackP1.Children.Add(textBlock);
                 textBoxesMedicine.Add(textBlock);
             }
@@ -141,8 +171,9 @@ namespace MedHelper_UI
         {
             if (cbd.SelectedItem != null)
             {
-                var selectedTMedicine = (String)cbd.SelectedItem;
-                var textBlock = CreateTextBlock(selectedTMedicine);
+                var selectedDisease = (Disease)cbd.SelectedItem;
+                var textBlock = CreateTextBlock(selectedDisease.ToString());
+                diseases.Add(selectedDisease.DiseaseID);
                 StackP2.Children.Add(textBlock);
                 textBoxesDisasters.Add(textBlock);
             }

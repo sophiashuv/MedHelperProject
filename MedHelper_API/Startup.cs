@@ -42,15 +42,18 @@ namespace MedHelper_API
             });
             services.AddSingleton(mappingConfig.CreateMapper());
             
+            // Repositories
+            services.AddScoped<IDoctorRepository, DoctorRepository>();
+            services.AddScoped<IPatientRepository, PatientRepository>();
+            services.AddScoped<IMedicineRepository, MedicineRepository>();
+            services.AddScoped<IDiseaseRepository, DiseaseRepository>();
+            
             // Services
             services.AddScoped<IPatientService, PatientService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IJwtAuthManager, JwtAuthManager>();
+            services.AddScoped<IDoctorService, DoctorService>();
 
-            // Repositories
-            services.AddScoped<IDoctorRepository, DoctorRepository>();
-            services.AddScoped<IPatientRepository, PatientRepository>();
-            
             // JWT
             var jwtTokenConfig = Configuration.GetSection(nameof(JwtTokenConfig)).Get<JwtTokenConfig>();
             services.AddSingleton(jwtTokenConfig);

@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using MedHelper_EF.Models;
+
 namespace MedHelper_API.Responses
 {
     public class PatientResponse
@@ -7,5 +10,7 @@ namespace MedHelper_API.Responses
         public string Gender { get; set; }
         public System.DateTime Birthdate { get; set; }
         public int DoctorID { get; set; }
+        public List<MedicineResponse> Medicines { get; set; }
+        public List<DiseaseResponse> Diseases { get; set; }
     }
 }

@@ -1,3 +1,4 @@
+using MedHelper_EF.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -24,8 +25,9 @@ namespace MedHelper_UI
     public partial class Page_DoctorInfo : Page
     {
         public Page_Doctor MainWindow;
-        public List<String> patients = new List<string> { "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3" };
-        private List<String> found = new List<string>();
+        private HttpClient client = new HttpClient();
+        public List<Patient> patients = new List<Patient>();
+        private List<Patient> found = new List<Patient>();
         public List<Button> buttons;
         public Page_DoctorInfo(Page_Doctor mainWindow)
         {
@@ -40,7 +42,7 @@ namespace MedHelper_UI
         {
             StackP.Children.Clear();
             buttons.Clear();
-            found = patients.FindAll(x => x.Contains(FindResults.Text));
+            found = patients.FindAll(x => x.UserName.Contains(FindResults.Text));
             var height = 30;
             for (int i = 0; i < found.Count(); i++)
             {
@@ -59,6 +61,20 @@ namespace MedHelper_UI
             firstlastname.Text = MainWindow.firstlastname;
             email.Text = MainWindow.email;
             username.Text = MainWindow.username;
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", MainWindow.mainWindow.token);
+            var response = client.GetAsync("https://localhost:44374/api/v1/patient");
+            response.Wait();
+            if (response.Result.IsSuccessStatusCode)
+            {
+                var res = JsonConvert.DeserializeObject<dynamic>(response.Result.Content.ReadAsStringAsync().Result);
+                var patients_serial = res.result;
+                foreach (var item in patients_serial)
+                {
+                    patients.Add(JsonConvert.DeserializeObject<Patient>(item.ToString()));
+                }
+            }
+
         }
         private void BtmEditClick(object sender, RoutedEventArgs e)
         {

@@ -10,18 +10,23 @@ namespace MedHelper_EF.Models
     {
         public Patient()
         {
-            this.PatientDiseases = new HashSet<PatientDisease>();
-            this.PatientMedicines = new HashSet<PatientMedicine>();
+            PatientDiseases = new HashSet<PatientDisease>();
+            PatientMedicines = new HashSet<PatientMedicine>();
         }
 
         public int PatientID { get; set; }
         public string UserName { get; set; }
         public string Gender { get; set; }
-        public Nullable<int> DoctorID { get; set; }
+        public int DoctorID { get; set; }
         public System.DateTime Birthdate { get; set; }
 
         public virtual Doctor Doctor { get; set; }
         public virtual ICollection<PatientDisease> PatientDiseases { get; set; }
         public virtual ICollection<PatientMedicine> PatientMedicines { get; set; }
+
+        public override string ToString()
+        {
+            return UserName;
+        }
     }
 }

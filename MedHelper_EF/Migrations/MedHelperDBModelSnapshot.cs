@@ -113,10 +113,10 @@ namespace MedHelper_EF.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int?>("CompositionID")
+                    b.Property<int>("CompositionID")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("MedicineID")
+                    b.Property<int>("MedicineID")
                         .HasColumnType("integer");
 
                     b.HasKey("MedicineCompositionID");
@@ -135,10 +135,10 @@ namespace MedHelper_EF.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int?>("ContraindicationID")
+                    b.Property<int>("ContraindicationID")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("MedicineID")
+                    b.Property<int>("MedicineID")
                         .HasColumnType("integer");
 
                     b.HasKey("MedicineContraindicationID");
@@ -185,7 +185,7 @@ namespace MedHelper_EF.Migrations
                     b.Property<DateTime>("Birthdate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int?>("DoctorID")
+                    b.Property<int>("DoctorID")
                         .HasColumnType("integer");
 
                     b.Property<string>("Gender")
@@ -208,10 +208,10 @@ namespace MedHelper_EF.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int?>("DiseaseID")
+                    b.Property<int>("DiseaseID")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("PatientID")
+                    b.Property<int>("PatientID")
                         .HasColumnType("integer");
 
                     b.HasKey("PatientDiseaseID");
@@ -230,10 +230,10 @@ namespace MedHelper_EF.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int?>("MedicineID")
+                    b.Property<int>("MedicineID")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("PatientID")
+                    b.Property<int>("PatientID")
                         .HasColumnType("integer");
 
                     b.HasKey("PatientMedicineID");
@@ -249,11 +249,15 @@ namespace MedHelper_EF.Migrations
                 {
                     b.HasOne("MedHelper_EF.Models.Composition", "Composition")
                         .WithMany("MedicineCompositions")
-                        .HasForeignKey("CompositionID");
+                        .HasForeignKey("CompositionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("MedHelper_EF.Models.Medicine", "Medicine")
                         .WithMany("MedicineCompositions")
-                        .HasForeignKey("MedicineID");
+                        .HasForeignKey("MedicineID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Composition");
 
@@ -264,11 +268,15 @@ namespace MedHelper_EF.Migrations
                 {
                     b.HasOne("MedHelper_EF.Models.Contraindication", "Contraindication")
                         .WithMany("MedicineContraindications")
-                        .HasForeignKey("ContraindicationID");
+                        .HasForeignKey("ContraindicationID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("MedHelper_EF.Models.Medicine", "Medicine")
                         .WithMany("MedicineContraindications")
-                        .HasForeignKey("MedicineID");
+                        .HasForeignKey("MedicineID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Contraindication");
 
@@ -294,7 +302,9 @@ namespace MedHelper_EF.Migrations
                 {
                     b.HasOne("MedHelper_EF.Models.Doctor", "Doctor")
                         .WithMany("Patients")
-                        .HasForeignKey("DoctorID");
+                        .HasForeignKey("DoctorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Doctor");
                 });
@@ -303,11 +313,15 @@ namespace MedHelper_EF.Migrations
                 {
                     b.HasOne("MedHelper_EF.Models.Disease", "Disease")
                         .WithMany("PatientDiseases")
-                        .HasForeignKey("DiseaseID");
+                        .HasForeignKey("DiseaseID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("MedHelper_EF.Models.Patient", "Patient")
                         .WithMany("PatientDiseases")
-                        .HasForeignKey("PatientID");
+                        .HasForeignKey("PatientID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Disease");
 
@@ -318,11 +332,15 @@ namespace MedHelper_EF.Migrations
                 {
                     b.HasOne("MedHelper_EF.Models.Medicine", "Medicine")
                         .WithMany("PatientMedicines")
-                        .HasForeignKey("MedicineID");
+                        .HasForeignKey("MedicineID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("MedHelper_EF.Models.Patient", "Patient")
                         .WithMany("PatientMedicines")
-                        .HasForeignKey("PatientID");
+                        .HasForeignKey("PatientID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Medicine");
 

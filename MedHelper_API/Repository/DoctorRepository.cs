@@ -19,11 +19,11 @@ namespace MedHelper_API.Repository
             return result;
         }
 
-        public async Task<Doctor> GetById(int id)
-        {
-            var result = await _context.Doctors.FirstOrDefaultAsync(obj => obj.DoctorID == id);
-
-            return result;
-        }
+        // public async Task<Doctor> GetById(int id)
+        // {
+        //     var result = await _context.Doctors.FirstOrDefaultAsync(obj => obj.DoctorID == id);
+        //
+        //     return result;
+        // }
     }
 }

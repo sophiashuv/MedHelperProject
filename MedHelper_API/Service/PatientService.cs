@@ -35,11 +35,25 @@ namespace MedHelper_API.Service
             result.Diseases = new List<DiseaseResponse>();
             foreach (var patientMedicine in patient.PatientMedicines)
             {
-                var objMedicine = await _medicineRepository.GetById(patientMedicine.MedicineID);
+                var objMedicine = await _medicineRepository.GetMedicineWithInclude(patientMedicine.MedicineID);
                 var medicineResponse = _mapper.Map<MedicineResponse>(objMedicine);
-                medicineResponse.Compositions
-                result.Medicines.Add(medicineResponse);
                 
+                var objCompositions = await _medicineRepository.GetMedicineCompositions(objMedicine.MedicineCompositions.Select(obj => 
+                    obj.CompositionID).ToList());
+                medicineResponse.Compositions = objCompositions.Select(obj => 
+                    _mapper.Map<CompositionResponse>(obj)).ToList();
+                
+                var objContraindications = await _medicineRepository.GetMedicineContraindications(objMedicine.MedicineContraindications.Select(obj => 
+                    obj.ContraindicationID).ToList());
+                medicineResponse.Contraindications = objContraindications.Select(obj => 
+                    _mapper.Map<ContraindicationResponse>(obj)).ToList();
+                
+                var objInteractions = await _medicineRepository.GetMedicineInteraction(objMedicine.MedicineInteractions.Select(obj => 
+                    obj.MedicineInteractionID).ToList());
+                medicineResponse.Interactions = objInteractions.Select(obj => 
+                    _mapper.Map<MedicineInteractionResponse>(obj)).ToList();
+                
+                result.Medicines.Add(medicineResponse);
             }
                 
             foreach (var patientDisease in patient.PatientDiseases)
@@ -57,23 +71,41 @@ namespace MedHelper_API.Service
             
             foreach (var patient in patients)
             {
-                var obj = _mapper.Map<PatientResponse>(patient);
-                obj.Medicines = new List<MedicineResponse>();
-                obj.Diseases = new List<DiseaseResponse>();
+                var patientResponse = _mapper.Map<PatientResponse>(patient);
+                patientResponse.Medicines = new List<MedicineResponse>();
+                patientResponse.Diseases = new List<DiseaseResponse>();
                 
                 foreach (var patientMedicine in patient.PatientMedicines)
                 {
-                    var objMedicine = await _medicineRepository.GetById(patientMedicine.MedicineID);
-                    obj.Medicines.Add(_mapper.Map<MedicineResponse>(objMedicine));
+                    var objMedicine = await _medicineRepository.GetMedicineWithInclude(patientMedicine.MedicineID);
+                    var medicineResponse = _mapper.Map<MedicineResponse>(objMedicine);
+                    
+                    var objCompositions = await _medicineRepository.GetMedicineCompositions(objMedicine.MedicineCompositions.Select(obj => 
+                        obj.CompositionID).ToList());
+                    medicineResponse.Compositions = objCompositions.Select(obj => 
+                        _mapper.Map<CompositionResponse>(obj)).ToList();
+                
+                    var objContraindications = await _medicineRepository.GetMedicineContraindications(objMedicine.MedicineContraindications.Select(obj => 
+                        obj.ContraindicationID).ToList());
+                    medicineResponse.Contraindications = objContraindications.Select(obj => 
+                        _mapper.Map<ContraindicationResponse>(obj)).ToList();
+                
+                    var objInteractions = await _medicineRepository.GetMedicineInteraction(objMedicine.MedicineInteractions.Select(obj => 
+                        obj.MedicineInteractionID).ToList());
+                    medicineResponse.Interactions = objInteractions.Select(obj => 
+                        _mapper.Map<MedicineInteractionResponse>(obj)).ToList();
+
+
+                    patientResponse.Medicines.Add(medicineResponse);
                 }
                 
                 foreach (var patientDisease in patient.PatientDiseases)
                 {
                     var objMedicine = await _diseaseRepository.GetById(patientDisease.DiseaseID);
-                    obj.Diseases.Add(_mapper.Map<DiseaseResponse>(objMedicine));
+                    patientResponse.Diseases.Add(_mapper.Map<DiseaseResponse>(objMedicine));
                 }
 
-                response.Add(obj);
+                response.Add(patientResponse);
             }
 
             return response;

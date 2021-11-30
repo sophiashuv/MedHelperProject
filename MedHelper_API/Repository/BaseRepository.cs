@@ -17,21 +17,24 @@ namespace MedHelper_API.Repository
             _context = postgresDbContext;
         }
         
-        // не працює (((
         public async Task<TEntity> GetById(int id)
         {
-            Console.Write(id);
-            // var result = await _context.Set<TEntity>(). FirstOrDefaultAsync(obj => obj.GetId() == id);
-            var result = await _context.Set<TEntity>().Where(obj => obj.GetId() == id).FirstOrDefaultAsync();
-            if (result == null) throw new KeyNotFoundException($"{typeof(TEntity)} hasn't been found.");
-
+            // Console.Write(id);
+            // // var result = await _context.Set<TEntity>(). FirstOrDefaultAsync(obj => obj.GetId() == id);
+            // var result = await _context.Set<TEntity>().Where(obj => obj.GetId() == id).FirstOrDefaultAsync();
+            // if (result == null) throw new KeyNotFoundException($"{typeof(TEntity)} hasn't been found.");
+            //
+            // return result;
+            var entities = _context.Set<TEntity>().AsEnumerable();
+            var result = entities.FirstOrDefault(obj => obj.GetId() == id);
             return result;
         }
 
-        public async Task Create(TEntity item)
+        public async Task<TEntity> Create(TEntity item)
         {
-            await _context.AddAsync(item);
+            var newObj = await _context.AddAsync(item);
             await _context.SaveChangesAsync();
+            return newObj.Entity;
         }
 
         public async Task Delete(TEntity item)

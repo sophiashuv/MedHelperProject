@@ -76,7 +76,7 @@ namespace MedHelper_API.Controllers
         }
         
         [HttpPut("{id}")]
-        public async Task<ActionResult<PatientResponse>> Update(int id, UpdatePatientDto patientDto)
+        public async Task<ActionResult> Update(int id, UpdatePatientDto patientDto)
         {
             try
             {

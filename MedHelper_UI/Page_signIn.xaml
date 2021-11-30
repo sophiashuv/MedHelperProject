@@ -16,11 +16,11 @@
                     <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="30,10,0,0">
                         <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="0,10,0,10">
                             <TextBlock HorizontalAlignment="Left" Text="Username or email address:" VerticalAlignment="Center" Margin="0,0,0,5" FontSize="16" />
-                            <TextBox HorizontalAlignment="Left" Text="example@email.com" VerticalAlignment="Top" Width="222" Height="25" Foreground="#FF716E6E" />
+                            <TextBox Name="email" HorizontalAlignment="Left" Text="example@email.com" VerticalAlignment="Top" Width="222" Height="25" Foreground="#FF716E6E" />
                         </StackPanel>
                         <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="0,20,0,10">
                             <TextBlock HorizontalAlignment="Left" Text="Your password:" VerticalAlignment="Center" Margin="0,0,0,5" FontSize="16" />
-                            <PasswordBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="222" Height="25" Foreground="#FF716E6E" />
+                            <PasswordBox Name="password" HorizontalAlignment="Left" VerticalAlignment="Top" Width="222" Height="25" Foreground="#FF716E6E" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal"  VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,5,0,5">
                             <Button Content="Sign in" MinHeight="25" HorizontalAlignment="Left" MinWidth="70" VerticalAlignment="Stretch" BorderBrush="White" Background="#FFED635E" Foreground="White" FontSize="16" FontWeight="Bold" Height="31" Width="80" Margin="0,5,0,5" Click="BtmClickSignInPage"/>

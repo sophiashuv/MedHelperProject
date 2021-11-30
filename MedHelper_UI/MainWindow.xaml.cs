@@ -46,5 +46,28 @@ namespace MedHelper_UI
         {
             MainFrame.Content = new Page_Welcome();
         }
+
+        private void BtmClickDoctor(object sender, RoutedEventArgs e)
+        {
+            this.MainFrame.Content = new Page_Doctor(this);
+        }
+
+        private void BtmClickAddPatient(object sender, RoutedEventArgs e)
+        {
+            var k = new Page_Doctor(this);
+            var v = k.DoctorFrame;
+            v.Content = new Page_AddPatient(k);
+            this.MainFrame.Content = v;
+        }
+
+        private void BtmClickEditDoctor(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtmClickPatient(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

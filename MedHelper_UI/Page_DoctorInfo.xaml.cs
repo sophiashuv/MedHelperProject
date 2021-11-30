@@ -40,8 +40,22 @@ namespace MedHelper_UI
                 buttons[i].Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF56C1CA"));
                 buttons[i].Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff"));
                 buttons[i].BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff"));
+                buttons[i].Click += new RoutedEventHandler(patient_Click);
                 StackP.Children.Add(buttons[i]);
             }
+            FindResults.Text = "";
+        }
+
+        private void patient_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.DoctorFrame.Content = new PatientInfo(MainWindow);
+        }
+
+        private void setInformation()
+        {
+            firstlastname.Text = MainWindow.firstlastname;
+            email.Text = MainWindow.email;
+            username.Text = MainWindow.username;
         }
 
         private void BtmEditClick(object sender, RoutedEventArgs e)

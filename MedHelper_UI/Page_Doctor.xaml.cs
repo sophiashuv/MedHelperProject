@@ -46,6 +46,7 @@ namespace MedHelper_UI
 
         private void DoctorWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            //setInformation();
             DoctorFrame.Content = new Page_DoctorInfo(this);
           
             

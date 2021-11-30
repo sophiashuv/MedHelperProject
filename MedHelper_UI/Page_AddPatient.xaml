@@ -12,7 +12,7 @@
     <Grid Margin="10,0,0,0">
         <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="50,10,50,0">
             <TextBlock HorizontalAlignment="Left" Margin="10,0,10,5" Text="Add Patient:" VerticalAlignment="Top" MinWidth="100" FontSize="36" FontWeight="Bold" Foreground="#FFED635E"/>
-            <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Background="#FF56C1CA" Margin="0,0,0,50" Height="270">
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Background="#FF56C1CA" Margin="0,0,0,30" Height="270">
                 <StackPanel Orientation="Horizontal" Margin="35,0,35,10" VerticalAlignment="Top">
                     <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="30,10,0,0">
                         <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="0,0,0,10">

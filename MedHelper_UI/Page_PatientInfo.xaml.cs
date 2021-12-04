@@ -22,11 +22,15 @@ namespace MedHelper_UI
     public partial class PatientInfo : Page
     {
         public Page_Doctor MainWindow;
+
         public List<String> medicines = new List<string> { "Medicine1", "Medicine2", "Medicine3", "Medicine4", "Medicine5", "Medicine6", "Medicine7", "Medicine8", "Medicine9"};
         public List<Button> buttons;
-        public PatientInfo(Page_Doctor mainWindoe)
+        public StackPanel medicinePanel = new StackPanel();
+        private int UserId;
+        public PatientInfo(Page_Doctor mainWindow, int userId)
         {
-            MainWindow = mainWindoe;
+            UserId = userId;
+            MainWindow = mainWindow;
             InitializeComponent();
             buttons = new List<Button>(medicines.Count);
 
@@ -40,15 +44,10 @@ namespace MedHelper_UI
                 buttons[i].Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff"));
                 buttons[i].BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff"));
                 buttons[i].Click += new RoutedEventHandler(medicine_Click);
-                StackPP.Children.Add(buttons[i]);
             }
-        }
-
-        private void medicine_Click(object sender, RoutedEventArgs e)
-        {
             StackPP.Children.Clear();
             var button_num = 0;
-            var medicinePanel = new StackPanel();
+
             medicinePanel.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff"));
             var medicineText = new TextBlock();
             var medicineDescription = "Не слід порушувати рекомендації щодо застосування лікарського засобу ‒ це може зашкодити здоров’ю. " +
@@ -66,28 +65,39 @@ namespace MedHelper_UI
                 "На період лікування препаратом слід утримуватися від керування транспортними засобами та роботи з потенційно ‒ небезпечними механізмами через вміст етанолу 70 % та можливість розвитку побічних ефектів з боку центральної нервової системи.";
 
             medicineDescription = Regex.Replace(medicineDescription, ".{50}", "$0\n");
-            medicineText.Text =  medicineDescription;
+            medicineText.Text = medicineDescription;
             medicineText.Margin = new Thickness(10, 0, 5, 0);
             medicineText.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFED635E"));
             medicinePanel.Children.Add(medicineText);
-
             for (int i = 0; i < button_num + 1; i++)
             {
                 StackPP.Children.Add(buttons[i]);
             }
-
+            
             StackPP.Children.Add(medicinePanel);
 
             for (int i = button_num + 1; i < medicines.Count(); i++)
             {
                 StackPP.Children.Add(buttons[i]);
             }
+        }
 
+        private void medicine_Click(object sender, RoutedEventArgs e)
+        {
+            
+            if(medicinePanel.Visibility==System.Windows.Visibility.Visible)
+            {
+                medicinePanel.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                medicinePanel.Visibility = System.Windows.Visibility.Visible;
+            }
         }
 
         private void BtmEditPatientClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.DoctorFrame.Content = new Page_EditPatient(MainWindow);
+            MainWindow.DoctorFrame.Content = new Page_EditPatient(MainWindow,UserId);
         }
     }
 }

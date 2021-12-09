@@ -14,16 +14,23 @@ namespace MedHelper_API.Repository
         {
         }
 
-        public async Task<Medicine> GetMedicineWithInclude(int id)
+        public async Task<List<Medicine>> GetMedicineWithInclude(List<int> ids)
         {
             var result = await _context.Medicines
                 .Include(obj => obj.MedicineCompositions)
                 .Include(obj => obj.MedicineContraindications)
                 .Include(obj => obj.MedicineInteractions)
-                .FirstOrDefaultAsync(obj => obj.MedicineID == id);
+                .Where(obj => ids.Contains(obj.MedicineID)).ToListAsync();
             return result;
         }
 
+        public async Task<List<TEntity>> GetAllTEntity<TEntity>() where TEntity : BaseEntity
+        {
+            var result = _context.Set<TEntity>().AsEnumerable().ToList();
+
+            return result;
+        }
+        
         public async Task<List<Composition>> GetMedicineCompositions(List<int> ids)
         {
             var result = await _context.Compositions

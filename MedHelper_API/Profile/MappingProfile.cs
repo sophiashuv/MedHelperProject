@@ -33,8 +33,8 @@ namespace MedHelper_API.Profile
             CreateMap<CompositionResponse, Composition>();
             CreateMap<Contraindication, ContraindicationResponse>();
             CreateMap<ContraindicationResponse, Contraindication>();
-            CreateMap<DiseaseRepository, Disease>();
-            CreateMap<Disease, DiseaseRepository>();
+            CreateMap<DiseaseResponse, Disease>();
+            CreateMap<Disease, DiseaseResponse>();
             CreateMap<MedicineInteractionResponse, MedicineInteraction>();
             CreateMap<MedicineInteraction, MedicineInteractionResponse>();
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MedHelper_EF.Models
 {
-    public partial class MedicineInteraction
+    public partial class MedicineInteraction: BaseEntity
     {
         public int MedicineInteractionID { get; set; }
         public string Description { get; set; }

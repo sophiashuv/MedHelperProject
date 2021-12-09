@@ -6,9 +6,10 @@ namespace MedHelper_API.Repository.Contracts
 {
     public interface IMedicineRepository: IBaseRepository<Medicine>
     {
-        Task<Medicine> GetMedicineWithInclude(int id);
-        Task<List<Composition>> GetMedicineCompositions(List<int> id);
-        Task<List<Contraindication>> GetMedicineContraindications(List<int> id);
-        Task<List<MedicineInteraction>> GetMedicineInteraction(List<int> id);
+        Task<List<Medicine>> GetMedicineWithInclude(List<int> ids);
+        Task<List<Composition>> GetMedicineCompositions(List<int> ids);
+        Task<List<Contraindication>> GetMedicineContraindications(List<int> ids);
+        Task<List<MedicineInteraction>> GetMedicineInteraction(List<int> ids);
+        Task<List<TEntity>> GetAllTEntity<TEntity>() where TEntity : BaseEntity;
     }
 }

@@ -22,7 +22,25 @@
                         </Button>
                     </StackPanel>
                     <ScrollViewer Height="250" Width="350" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" VerticalAlignment="Bottom" Margin="0,0,0,5" Background="#FF56C1CA" Foreground="White" BorderBrush="#FFED635E" HorizontalAlignment="Stretch">
-                        <StackPanel x:Name="StackP" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="370" Height="Auto">
+                        <StackPanel x:Name="StackP" VerticalAlignment="Top" HorizontalAlignment="Stretch" Width="370" Height="Auto">
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                <TextBlock Text="UserName:" FontWeight="Bold" Margin="10,0,10,0"></TextBlock>
+                                <TextBlock Name="username" Text="TestName" FontWeight="Normal" Foreground="Black"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,5,0,-1">
+                                <TextBlock Text="Gender:" FontWeight="Bold" Margin="10,0,10,0"></TextBlock>
+                                <TextBlock Name="Gender" Text="Male" FontWeight="Normal" Foreground="Black"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                <TextBlock Text="Age:" FontWeight="Bold" Margin="10,0,10,0"></TextBlock>
+                                <TextBlock Name="Age" Text="25" FontWeight="Normal" Foreground="Black"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Name="MedicineList" Orientation="Vertical" Margin="0,10,0,0">
+                                <TextBlock Text="Medicine List:" FontWeight="Bold" Margin="10,0,10,0"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Name="DiseaseList" Orientation="Vertical" Margin="0,10,0,0">
+                                <TextBlock Text="Medical List:" FontWeight="Bold" Margin="10,0,10,0"></TextBlock>
+                            </StackPanel>
                         </StackPanel>
                     </ScrollViewer>
                 </StackPanel>

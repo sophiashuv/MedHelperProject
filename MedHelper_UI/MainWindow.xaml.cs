@@ -25,6 +25,10 @@ namespace MedHelper_UI
         {
             InitializeComponent();
             Loaded += MainWindow_Loaded;
+            cabinet.IsEnabled = false;
+            logout.IsEnabled = false;
+            cabinet.Visibility = Visibility.Collapsed;
+            logout.Visibility = Visibility.Collapsed;
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -46,28 +50,28 @@ namespace MedHelper_UI
         {
             MainFrame.Content = new Page_Welcome();
         }
+        private void Logout()
+        {
+            token = "";
+            cabinet.IsEnabled = false;
+            logout.IsEnabled = false;
+            cabinet.Visibility = Visibility.Collapsed;
+            logout.Visibility = Visibility.Collapsed;
+            login.IsEnabled = true;
+            signin.IsEnabled = true;
+            login.Visibility = Visibility.Visible;
+            signin.Visibility = Visibility.Visible;
+            MainFrame.Content = new Page_Welcome();
+
+        }
+        private void BtmClickLogOut(object sender, RoutedEventArgs e)
+        {
+            Logout();
+        }
 
         private void BtmClickDoctor(object sender, RoutedEventArgs e)
         {
-            this.MainFrame.Content = new Page_Doctor(this);
-        }
-
-        private void BtmClickAddPatient(object sender, RoutedEventArgs e)
-        {
-            var k = new Page_Doctor(this);
-            var v = k.DoctorFrame;
-            v.Content = new Page_AddPatient(k);
-            this.MainFrame.Content = v;
-        }
-
-        private void BtmClickEditDoctor(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void BtmClickPatient(object sender, RoutedEventArgs e)
-        {
-
+            MainFrame.Content = new Page_Doctor(this);
         }
     }
 }

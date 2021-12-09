@@ -10,8 +10,8 @@
 
     <Grid>
         <StackPanel x:Name="StackPP" Orientation="Vertical" Width="50" VerticalAlignment="Stretch" HorizontalAlignment="Left" Background="#FF56C1CA">
-            <ScrollViewer Height="270" Width="50" Name="leftBarScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" VerticalAlignment="Center" Margin="0,40,0,40" Background="#FFED635E" Foreground="White" BorderBrush="#FFED635E" HorizontalAlignment="Stretch">
-                <StackPanel x:Name="StackP" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="30" Height="Auto">
+            <ScrollViewer Height="270" Width="50" Name="leftBarScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" VerticalAlignment="Center" Margin="0,40,0,40" Background="#FFED635E" Foreground="White" BorderBrush="#FFED635E" HorizontalAlignment="Stretch" >
+                <StackPanel x:Name="StackP" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="30" Height="Auto" >
                     
                 </StackPanel>
             </ScrollViewer>

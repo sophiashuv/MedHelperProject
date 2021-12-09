@@ -9,8 +9,14 @@
     <Grid>
         <StackPanel Orientation="Horizontal" Height="50" VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="#FFED635E"/>
         <StackPanel Orientation="Horizontal" Height="50" VerticalAlignment="Top" HorizontalAlignment="Right">
-            <Button Content="Sign in" MinWidth="100" MinHeight="25" Margin="0,0,20,0" Click="BtmClickSignIn" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="#FF56C1CA" BorderBrush="White" Foreground="White"></Button>
-            <Button Content="Sign up" MinWidth="100" MinHeight="25" Margin="0,0,20,0" Click="BtmClickSignUp" HorizontalAlignment="Stretch" VerticalAlignment="Center" Foreground="#FFFDFDFD" BorderBrush="White" Background="#FF56C1CA"/>
+            <Button Name="cabinet" Margin="20,3,20,3" MinWidth="44" Click="BtmClickDoctor" BorderBrush="{x:Null}">
+                <Button.Background>
+                    <ImageBrush ImageSource="images/Patient.png"/>
+                </Button.Background>
+            </Button>
+            <Button Name="logout" Content="Log out" MinWidth="100" MinHeight="25" Margin="0,0,20,0" Click="BtmClickLogOut" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="#FF56C1CA" BorderBrush="White" Foreground="White"></Button>
+            <Button Name="login" Content="Sign in" MinWidth="100" MinHeight="25" Margin="0,0,20,0" Click="BtmClickSignIn" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="#FF56C1CA" BorderBrush="White" Foreground="White"></Button>
+            <Button Name="signin" Content="Sign up" MinWidth="100" MinHeight="25" Margin="0,0,20,0" Click="BtmClickSignUp" HorizontalAlignment="Stretch" VerticalAlignment="Center" Foreground="#FFFDFDFD" BorderBrush="White" Background="#FF56C1CA"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left">
             <Button  Margin="20,3,3,3" MinWidth="44" Click="BtmClickMedHelper" BorderBrush="{x:Null}">
@@ -20,8 +26,6 @@
             </Button>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Background="#FF56C1CA">
-            <Button Content="Doctor" MinWidth="100" MinHeight="25" Margin="0,0,20,0" Click="BtmClickDoctor" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="#FF56C1CA" BorderBrush="White" Foreground="White"></Button>
-            
         </StackPanel>
 
         <Frame x:Name="MainFrame" Margin="0,50,0,20" NavigationUIVisibility="Hidden"/>

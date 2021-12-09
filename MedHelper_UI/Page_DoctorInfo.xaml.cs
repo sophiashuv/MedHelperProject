@@ -38,6 +38,7 @@ namespace MedHelper_UI
             Search();
            
         }
+
         private void Search()
         {
             StackP.Children.Clear();
@@ -48,6 +49,7 @@ namespace MedHelper_UI
             {
                 buttons.Add(new Button());
                 buttons[i].Content = found[i];
+                buttons[i].Click += patient;
                 buttons[i].Height = height;
                 buttons[i].Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF56C1CA"));
                 buttons[i].Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff"));
@@ -60,10 +62,15 @@ namespace MedHelper_UI
 
         private void patient_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.DoctorFrame.Content = new PatientInfo(MainWindow);
+            
         }
+        private void patient(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            var pat = (Patient)button.Content;
 
-      
+            MainWindow.DoctorFrame.Content = new PatientInfo(MainWindow, pat.PatientID);
+        }
         private void setInformation()
         {
             firstlastname.Text = MainWindow.firstlastname;

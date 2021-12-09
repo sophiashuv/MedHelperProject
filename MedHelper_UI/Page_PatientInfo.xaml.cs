@@ -103,6 +103,7 @@ namespace MedHelper_UI
             var medicineName = CreateMedicineText("Medicine Name: ", "#FFED635E");
             var medicineName2 = CreateMedicineText("Medicine ", "#000000", false);
             var StackPName = new StackPanel();
+            StackPName.Margin = new Thickness(0, 3, 0, 0);
             StackPName.Orientation = Orientation.Horizontal;
             StackPName.Children.Add(medicineName);
             StackPName.Children.Add(medicineName2);
@@ -126,16 +127,6 @@ namespace MedHelper_UI
             StackPComposition.Children.Add(medicineComposition2);
             medicinePanel.Children.Add(StackPComposition);
 
-            var interaction = new List<String> { "Interaction1", "Interaction2", "Interaction3" };
-            var interactionString = Regex.Replace(String.Join(", ", interaction), ".{33}", "$0\n");
-            var medicineInteraction = CreateMedicineText("Medicine Interaction: ", "#FFED635E");
-            var medicineInteraction2 = CreateMedicineText(interactionString, "#000000", false);
-            var StackPInteraction = new StackPanel();
-            StackPInteraction.Orientation = Orientation.Horizontal;
-            StackPInteraction.Children.Add(medicineInteraction);
-            StackPInteraction.Children.Add(medicineInteraction2);
-            medicinePanel.Children.Add(StackPInteraction);
-
             var сontraindication = new List<String> { "Contraindication1", "Contraindication2", "Contraindication3" };
             var сontraindicationString = Regex.Replace(String.Join(", ", сontraindication), ".{25}", "$0\n");
             var medicineContraindication = CreateMedicineText("Medicine Contraindication: ", "#FFED635E");
@@ -145,6 +136,31 @@ namespace MedHelper_UI
             StackPContraindication.Children.Add(medicineContraindication);
             StackPContraindication.Children.Add(medicineContraindication2);
             medicinePanel.Children.Add(StackPContraindication);
+
+            var interaction = new Dictionary<String, String> { { "Medicine1", "Interaction1" },
+                {"Medicine2", "Interaction2" },
+                {"Medicine3",  "Interaction3" } };
+            var medicineInteraction = CreateMedicineText("Medicine Interaction: ", "#FFED635E");
+            var StackPInteraction = new StackPanel();
+            StackPInteraction.Orientation = Orientation.Horizontal;
+            StackPInteraction.Children.Add(medicineInteraction);
+            medicinePanel.Children.Add(StackPInteraction);
+
+            var ind = 1;
+            var StackPInteractionAll = new StackPanel();
+            StackPInteractionAll.Margin = new Thickness(0, 0, 0, 5);
+            foreach (var (key, value) in interaction)
+            {
+                var medicineInteractionMedicine = CreateMedicineText($"{ind}. {Regex.Replace(key, ".{25}", "$0\n")}:", "#000000");
+                var medicineInteractionInteraction = CreateMedicineText(Regex.Replace(value, ".{33}", "$0\n"), "#000000", false);
+                StackPInteraction = new StackPanel();
+                StackPInteraction.Orientation = Orientation.Horizontal;
+                StackPInteraction.Children.Add(medicineInteractionMedicine);
+                StackPInteraction.Children.Add(medicineInteractionInteraction);
+                StackPInteractionAll.Children.Add(StackPInteraction);
+                ind++;
+            }
+            medicinePanel.Children.Add(StackPInteractionAll);
 
             for (int i = 0; i < button_num + 1; i++)
             {

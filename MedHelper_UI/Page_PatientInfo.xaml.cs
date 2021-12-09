@@ -94,7 +94,7 @@ namespace MedHelper_UI
         {
             Search(FindResults.Text);
         }
-        private void medicine12_Click(object sender, RoutedEventArgs e)
+        private void medicine_Click(object sender, RoutedEventArgs e)
         {
             StackPP.Children.Clear();
             var button_num = 0;
@@ -159,7 +159,7 @@ namespace MedHelper_UI
             }
 
         }
-        private void medicine_Click(object sender, RoutedEventArgs e)
+        private void medicine12_Click(object sender, RoutedEventArgs e)
         {
             
             if(medicinePanel.Visibility==System.Windows.Visibility.Visible)

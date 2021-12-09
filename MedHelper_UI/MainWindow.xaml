@@ -5,13 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MedHelper_UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        ResizeMode="NoResize"
+        Title="MedHelper" Height="450" Width="800">
     <Grid>
         <StackPanel Orientation="Horizontal" Height="50" VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="#FFED635E"/>
         <StackPanel Orientation="Horizontal" Height="50" VerticalAlignment="Top" HorizontalAlignment="Right">
             <Button Name="cabinet" Margin="20,3,20,3" MinWidth="44" Click="BtmClickDoctor" BorderBrush="{x:Null}">
                 <Button.Background>
-                    <ImageBrush ImageSource="images/Patient.png"/>
+                    <ImageBrush ImageSource="images/DoctorLogo.png"/>
                 </Button.Background>
             </Button>
             <Button Name="logout" Content="Log out" MinWidth="100" MinHeight="25" Margin="0,0,20,0" Click="BtmClickLogOut" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="#FF56C1CA" BorderBrush="White" Foreground="White"></Button>

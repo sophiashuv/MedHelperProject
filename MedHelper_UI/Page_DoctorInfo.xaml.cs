@@ -75,7 +75,7 @@ namespace MedHelper_UI
         {
             firstlastname.Text = MainWindow.firstlastname;
             email.Text = MainWindow.email;
-            username.Text = MainWindow.username;
+            //username.Text = MainWindow.username;
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", MainWindow.mainWindow.token);
             var response = client.GetAsync("https://localhost:44374/api/v1/patient");

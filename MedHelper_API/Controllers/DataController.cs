@@ -28,12 +28,54 @@ namespace MedHelper_API.Controllers
         }
         
         [HttpGet("medicines")]
-        public async Task<ActionResult<IEnumerable<MedicineResponse>>> GetAllMedicines()
+        public async Task<ActionResult> GetAllMedicines() // <IEnumerable<MedicineResponse>>
         {
-            var medicines = await _context.Medicines.ToListAsync();
-            var result = _mapper.Map<List<Medicine>, List<MedicineResponse>>(medicines);
+            var medicines = await _context.Medicines
+                .Include(obj => obj.MedicineCompositions)
+                .Include(obj => obj.MedicineContraindications)
+                .Include(obj => obj.MedicineInteractions)
+                .Select(obj => new
+                {
+                    obj.MedicineID,
+                    obj.Name,
+                    obj.pharmacotherapeuticGroup,
+                    Compositions = obj.MedicineCompositions.Select(c => c.Composition.Description),
+                    Contraindications = obj.MedicineContraindications.Select(c => c.Contraindication.Description),
+                    MedicineInteractions = obj.MedicineInteractions.Select(mi => new
+                    {
+                        CompositionDescription = mi.Composition.Description,
+                        mi.Description
+                    })
+                })
+                .ToListAsync();
+            // var result = _mapper.Map<List<Medicine>, List<MedicineResponse>>(medicines);
 
-            return Ok(result);
+            return Ok(medicines);
+        }
+        
+        [HttpGet("medicines/{id}")]
+        public async Task<ActionResult> GetMedicine(int id) // <IEnumerable<MedicineResponse>>
+        {
+            var medicine = await _context.Medicines
+                .Include(obj => obj.MedicineCompositions)
+                .Include(obj => obj.MedicineContraindications)
+                .Include(obj => obj.MedicineInteractions)
+                .Select(obj => new
+                {
+                    obj.MedicineID,
+                    obj.Name,
+                    obj.pharmacotherapeuticGroup,
+                    Compositions = obj.MedicineCompositions.Select(c => c.Composition.Description),
+                    Contraindications = obj.MedicineContraindications.Select(c => c.Contraindication.Description),
+                    MedicineInteractions = obj.MedicineInteractions.Select(mi => new
+                    {
+                        CompositionDescription = mi.Composition.Description,
+                        mi.Description
+                    })
+                })
+                .FirstOrDefaultAsync(obj => obj.MedicineID == id);
+
+            return Ok(medicine);
         }
         
         [HttpGet("diseases")]
@@ -45,12 +87,23 @@ namespace MedHelper_API.Controllers
             return Ok(result);
         }
         
+        [HttpGet("diseases/{id}")]
+        public async Task<ActionResult<IEnumerable<MedicineResponse>>> GetDisease(int id)
+        {
+            var diseases = await _context.Diseases.FirstOrDefaultAsync(obj => obj.DiseaseID == id);
+
+            return Ok(new
+            {
+                diseases.DiseaseID,
+                diseases.Title
+            });
+        }
+        
         [HttpGet("patient/{id}/search={search}")]
         public async Task<ActionResult> Search(int id, string search)
         {
             var user = GetCurrentUserId();
-            // search = "а";
-            
+
             var patient = await _context.Patients
                 .Include(obj => obj.PatientDiseases)
                 .FirstOrDefaultAsync(obj => obj.PatientID == id && obj.DoctorID == user);

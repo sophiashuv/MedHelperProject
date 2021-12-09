@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MedHelper_API.Repository.Contracts
@@ -9,5 +10,6 @@ namespace MedHelper_API.Repository.Contracts
         Task<TEntity> Create(TEntity item);
         Task Delete(TEntity item);
         Task Update(TEntity item);
+        Task<List<TEntity>> GetAllWithoutParams();
     }
 }

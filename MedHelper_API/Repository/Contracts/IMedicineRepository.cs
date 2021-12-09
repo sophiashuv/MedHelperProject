@@ -6,6 +6,5 @@ namespace MedHelper_API.Repository.Contracts
 {
     public interface IMedicineRepository: IBaseRepository<Medicine>
     {
-        Task<Medicine> GetMedicineWithInclude(int id);
     }
 }

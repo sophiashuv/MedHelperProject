@@ -115,6 +115,25 @@ namespace MedHelper_API.Controllers
 
             var patientDiseases = await _context.Diseases.Where(obj =>
                 patient.PatientDiseases.Select(o => o.DiseaseID).Contains(obj.DiseaseID)).ToListAsync();
+            
+            // var response = _context.Medicines
+            //     .Include(obj => obj.MedicineCompositions)
+            //     .Include(obj => obj.MedicineContraindications)
+            //     .Include(obj => obj.MedicineInteractions)
+            //     .Select(obj => new
+            //     {
+            //         obj.MedicineID,
+            //         obj.Name,
+            //         obj.pharmacotherapeuticGroup,
+            //         Compositions = obj.MedicineCompositions.Select(c => c.Composition.Description),
+            //         Contraindications = obj.MedicineContraindications.Select(c => c.Contraindication.Description),
+            //         MedicineInteractions = obj.MedicineInteractions.Select(mi => new
+            //         {
+            //             CompositionDescription = mi.Composition.Description,
+            //             mi.Description
+            //         })
+            //     })
+            //     .Where(obj => !patientDiseases.Contains(obj.Compositions));
 
             var medicines = await _context.Medicines
                 .Include(obj => obj.MedicineCompositions)
@@ -122,11 +141,11 @@ namespace MedHelper_API.Controllers
                 .Include(obj => obj.MedicineInteractions)
                 .Where(obj => obj.pharmacotherapeuticGroup.ToLower().Contains(search.ToLower()))
                 .ToListAsync();
-
+            
             var compositions = await _context.Compositions.ToListAsync();
             var contraindications = await _context.Contraindications.ToListAsync();
             var interactions = await _context.MedicineInteraction.Include(obj => obj.Composition).ToListAsync();
-
+            
             var responseData = from medicine in medicines
                 from composition in medicine.MedicineCompositions
                 join comp in compositions on composition.CompositionID equals comp.CompositionID
@@ -142,9 +161,13 @@ namespace MedHelper_API.Controllers
                     medicine.pharmacotherapeuticGroup,
                     CompositionDescription = comp.Description,
                     ContraindicationDescription = contr.Description,
-                    MedicineInteractionDescription = intr.Description
+                    MedicineInteractionDescription = new
+                    {
+                        intr.Description,
+                        CompositionDescription = intr.Composition.Description
+                    } 
                 };
-
+            
             var response = from medicine in responseData
                 group medicine by new { medicine.MedicineID, medicine.Name, medicine.pharmacotherapeuticGroup }
                 into grouped

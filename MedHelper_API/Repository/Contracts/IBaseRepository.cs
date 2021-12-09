@@ -11,6 +11,5 @@ namespace MedHelper_API.Repository.Contracts
         Task Delete(TEntity item);
         Task Update(TEntity item);
         Task<List<TEntity>> GetAllWithoutParams();
-        Task<List<TEntity>> GetByIds(List<int> ids);
     }
 }

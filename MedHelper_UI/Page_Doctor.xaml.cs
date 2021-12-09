@@ -1,3 +1,4 @@
+using MedHelper_EF.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -25,8 +26,9 @@ namespace MedHelper_UI
     {
         private HttpClient client = new HttpClient();
         public MainWindow mainWindow;
-        public List<String> patients = new List<string> { "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3", "Patient1", "Patient2", "Patient3" };
+        public List<Patient> patients = new List<Patient>();
         public List<Button> buttons;
+        private Dictionary<int, int> patientDict = new Dictionary<int, int>();
         public string username;
         public string email;
         public string firstlastname;
@@ -35,7 +37,7 @@ namespace MedHelper_UI
             InitializeComponent();
             this.mainWindow = mainWindow;
             Loaded += DoctorWindow_Loaded;
-
+            setInformation();
           
             buttons = new List<Button>(patients.Count);
 
@@ -43,8 +45,10 @@ namespace MedHelper_UI
             var height = 30;
             for (int i = 0; i < patients.Count(); i++)
             {
+                patientDict.Add(i + 1, patients[i].PatientID);
                 buttons.Add(new Button());
-                buttons[i].Content = i;
+                buttons[i].Content = i+1;
+                buttons[i].Click += patient;
                 buttons[i].Height = height;
                 buttons[i].Background = new  SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFED635E"));
                 buttons[i].Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff"));
@@ -52,6 +56,14 @@ namespace MedHelper_UI
                 StackP.Children.Add(buttons[i]);
             }
         }
+
+        private void patient(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            var num = (int)button.Content;
+            DoctorFrame.Content = new PatientInfo(this, patientDict[num]);
+        }
+
         private void setInformation()
         {
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", mainWindow.token);
@@ -64,10 +76,22 @@ namespace MedHelper_UI
                 email = res.result.email;
                 username = "А в модельці цього поля немаа";
             }
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", mainWindow.token);
+            var responsePatient = client.GetAsync("https://localhost:44374/api/v1/patient");
+            responsePatient.Wait();
+            if (responsePatient.Result.IsSuccessStatusCode)
+            {
+                var res = JsonConvert.DeserializeObject<dynamic>(responsePatient.Result.Content.ReadAsStringAsync().Result);
+                var patients_serial = res.result;
+                foreach (var item in patients_serial)
+                {
+                    patients.Add(JsonConvert.DeserializeObject<Patient>(item.ToString()));
+                }
+            }
         }
         private void DoctorWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            setInformation();
             DoctorFrame.Content = new Page_DoctorInfo(this);
         }
 

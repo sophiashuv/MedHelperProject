@@ -51,6 +51,14 @@ namespace MedHelper_UI
                 {
                     var res = JsonConvert.DeserializeObject<dynamic>(response.Result.Content.ReadAsStringAsync().Result);
                     MainWindow.token = res.result.accessToken;
+                    MainWindow.cabinet.IsEnabled = true;
+                    MainWindow.logout.IsEnabled = true;
+                    MainWindow.cabinet.Visibility = Visibility.Visible;
+                    MainWindow.logout.Visibility = Visibility.Visible;
+                    MainWindow.login.IsEnabled = false;
+                    MainWindow.signin.IsEnabled = false;
+                    MainWindow.login.Visibility = Visibility.Collapsed;
+                    MainWindow.signin.Visibility = Visibility.Collapsed;
                     MainWindow.MainFrame.Content = new Page_Doctor(MainWindow);
                 }
             }

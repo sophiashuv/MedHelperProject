@@ -32,6 +32,7 @@ namespace MedHelper_UI
         public List<Button> buttons;
         public StackPanel medicinePanel = new StackPanel();
         private int UserId;
+        
         public PatientInfo(Page_Doctor mainWindow, int userId)
         {
             UserId = userId;

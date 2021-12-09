@@ -92,7 +92,71 @@ namespace MedHelper_UI
         {
             Search(FindResults.Text);
         }
+        private void medicine12_Click(object sender, RoutedEventArgs e)
+        {
+            StackPP.Children.Clear();
+            var button_num = 0;
+            var medicinePanel = new StackPanel();
+            medicinePanel.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff"));
+            var medicineName = CreateMedicineText("Medicine Name: ", "#FFED635E");
+            var medicineName2 = CreateMedicineText("Medicine ", "#000000", false);
+            var StackPName = new StackPanel();
+            StackPName.Orientation = Orientation.Horizontal;
+            StackPName.Children.Add(medicineName);
+            StackPName.Children.Add(medicineName2);
+            medicinePanel.Children.Add(StackPName);
 
+            var medicineGroup = CreateMedicineText("Medicine Group: ", "#FFED635E");
+            var medicineGroup2 = CreateMedicineText("Group ", "#000000", false);
+            var StackPGroup = new StackPanel();
+            StackPGroup.Orientation = Orientation.Horizontal;
+            StackPGroup.Children.Add(medicineGroup);
+            StackPGroup.Children.Add(medicineGroup2);
+            medicinePanel.Children.Add(StackPGroup);
+
+            var composition = new List<String> { "Composition1", "Composition2", "Composition3" };
+            var compositionString = Regex.Replace(String.Join(", ", composition), ".{27}", "$0\n");
+            var medicineComposition = CreateMedicineText("Medicine Composition: ", "#FFED635E");
+            var medicineComposition2 = CreateMedicineText(compositionString, "#000000", false);
+            var StackPComposition = new StackPanel();
+            StackPComposition.Orientation = Orientation.Horizontal;
+            StackPComposition.Children.Add(medicineComposition);
+            StackPComposition.Children.Add(medicineComposition2);
+            medicinePanel.Children.Add(StackPComposition);
+
+            var interaction = new List<String> { "Interaction1", "Interaction2", "Interaction3" };
+            var interactionString = Regex.Replace(String.Join(", ", interaction), ".{33}", "$0\n");
+            var medicineInteraction = CreateMedicineText("Medicine Interaction: ", "#FFED635E");
+            var medicineInteraction2 = CreateMedicineText(interactionString, "#000000", false);
+            var StackPInteraction = new StackPanel();
+            StackPInteraction.Orientation = Orientation.Horizontal;
+            StackPInteraction.Children.Add(medicineInteraction);
+            StackPInteraction.Children.Add(medicineInteraction2);
+            medicinePanel.Children.Add(StackPInteraction);
+
+            var сontraindication = new List<String> { "Contraindication1", "Contraindication2", "Contraindication3" };
+            var сontraindicationString = Regex.Replace(String.Join(", ", сontraindication), ".{25}", "$0\n");
+            var medicineContraindication = CreateMedicineText("Medicine Contraindication: ", "#FFED635E");
+            var medicineContraindication2 = CreateMedicineText(сontraindicationString, "#000000", false);
+            var StackPContraindication = new StackPanel();
+            StackPContraindication.Orientation = Orientation.Horizontal;
+            StackPContraindication.Children.Add(medicineContraindication);
+            StackPContraindication.Children.Add(medicineContraindication2);
+            medicinePanel.Children.Add(StackPContraindication);
+
+            for (int i = 0; i < button_num + 1; i++)
+            {
+                StackPP.Children.Add(buttons[i]);
+            }
+
+            StackPP.Children.Add(medicinePanel);
+
+            for (int i = button_num + 1; i < medicines.Count(); i++)
+            {
+                StackPP.Children.Add(buttons[i]);
+            }
+
+        }
         private void medicine_Click(object sender, RoutedEventArgs e)
         {
             
@@ -104,6 +168,16 @@ namespace MedHelper_UI
             {
                 medicinePanel.Visibility = System.Windows.Visibility.Visible;
             }
+        }
+
+        public static TextBlock CreateMedicineText(String text, string color, bool bold = true)
+        {
+            var medicineText = new TextBlock();
+            medicineText.Text = text;
+            medicineText.Margin = new Thickness(10, 0, 5, 0);
+            medicineText.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
+            if (bold) medicineText.FontWeight = FontWeights.Bold;
+            return medicineText;
         }
         private void setInformation()
         {

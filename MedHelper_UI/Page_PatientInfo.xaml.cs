@@ -86,6 +86,7 @@ namespace MedHelper_UI
             //{
             //    StackPP.Children.Add(buttons[i]);
             //}
+            //fix
         }
 
         private void SearchEvent(object sender, TextChangedEventArgs e)

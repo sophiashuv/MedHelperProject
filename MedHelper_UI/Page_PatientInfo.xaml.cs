@@ -38,7 +38,7 @@ namespace MedHelper_UI
         }
         public PatientInfo(Page_Doctor mainWindow, int userId)
         {
-            MainWindow = mainWindoe;
+            MainWindow = mainWindow;
             InitializeComponent();
             buttons = new List<Button>(medicines.Count);
 

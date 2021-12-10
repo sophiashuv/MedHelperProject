@@ -61,6 +61,11 @@ namespace MedHelper_UI
                     MainWindow.signin.Visibility = Visibility.Collapsed;
                     MainWindow.MainFrame.Content = new Page_Doctor(MainWindow);
                 }
+                else
+                {
+                    MessageBox.Show("Something went wrong. Try again", "Error", MessageBoxButton.OK, MessageBoxImage.Hand);
+                }
+            
             }
         }
         private void BtmClickRegister(object sender, RoutedEventArgs e)

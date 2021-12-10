@@ -31,7 +31,7 @@ namespace MedHelper_UI
         public List<Medicine> found = new List<Medicine>();
         public List<Button> buttons;
         private int UserId;
-        
+
         public PatientInfo(Page_Doctor mainWindow, int userId)
         {
             UserId = userId;
@@ -52,14 +52,14 @@ namespace MedHelper_UI
         {
             StackPP.Children.Clear();
             var button_num = 0;
-            
+
 
             for (int i = 0; i < button_num + 1; i++)
             {
                 StackPP.Children.Add(buttons[i]);
             }
 
-           // StackPP.Children.Add(medicinePanel);
+            // StackPP.Children.Add(medicinePanel);
 
             for (int i = button_num + 1; i < medicines.Count(); i++)
             {
@@ -73,8 +73,8 @@ namespace MedHelper_UI
             var button = (Button)sender;
             var medicine = (Medicine)button.Content;
             var med = StackPP.FindName("desc2");
-            var medicinePanel = FindChild<StackPanel>(StackPP,$"desc{medicine.MedicineID}");
-            if(medicinePanel.Visibility==System.Windows.Visibility.Visible)
+            var medicinePanel = FindChild<StackPanel>(StackPP, $"desc{medicine.MedicineID}");
+            if (medicinePanel.Visibility == System.Windows.Visibility.Visible)
             {
                 medicinePanel.Visibility = System.Windows.Visibility.Collapsed;
             }
@@ -139,17 +139,41 @@ namespace MedHelper_UI
 
             var medicineResponse = client.GetAsync($"https://localhost:44374/api/v1/patient/{UserId}/search=п");
             medicineResponse.Wait();
-            if(medicineResponse.Result.IsSuccessStatusCode)
+            if (medicineResponse.Result.IsSuccessStatusCode)
             {
                 var result = JsonConvert.DeserializeObject<dynamic>(medicineResponse.Result.Content.ReadAsStringAsync().Result);
                 foreach (var item in result.result)
                 {
+                    var medicineComp = new List<MedicineComposition>();
+                    foreach (var comp in item.compositions)
+                    {
+                        medicineComp.Add(new MedicineComposition() { Composition = new Composition() { Description = comp } });
+                    }
+
+                    var medicineContr = new List<MedicineContraindication>();
+                    foreach (var contr in item.contraindications)
+                    {
+                        medicineContr.Add(new MedicineContraindication() { Contraindication = new Contraindication() { Description = contr } });
+                    }
+
+                    var medicineInter = new List<MedicineInteraction>();
+                    foreach (var inter in item.medicineInteractions)
+                    {
+                        medicineInter.Add(new MedicineInteraction()
+                        {
+                            Description = inter.description,
+                            Composition = new Composition() { Description = inter.compositionDescription }
+                        });
+                    }
+
                     medicines.Add(new Medicine()
                     {
                         MedicineID = item.medicineID,
                         Name = item.name,
-                        pharmacotherapeuticGroup = item.pharmacotherapeuticGroup
-
+                        pharmacotherapeuticGroup = item.pharmacotherapeuticGroup,
+                        MedicineCompositions = medicineComp,
+                        MedicineContraindications = medicineContr,
+                        MedicineInteractions = medicineInter
                     });
                 }
             }
@@ -193,7 +217,11 @@ namespace MedHelper_UI
             StackPGroup.Children.Add(medicineGroup2);
             medicinePanel.Children.Add(StackPGroup);
 
-            var composition = new List<String> { "Composition1", "Composition2", "Composition3" };
+            var composition = new List<String> ();
+            foreach (var item in m.MedicineCompositions)
+            {
+                composition.Add(item.Composition.Description);
+            }
             var compositionString = Regex.Replace(String.Join(", ", composition), ".{27}", "$0\n");
             var medicineComposition = CreateMedicineText("Medicine Composition: ", "#FFED635E");
             var medicineComposition2 = CreateMedicineText(compositionString, "#000000", false);
@@ -203,7 +231,11 @@ namespace MedHelper_UI
             StackPComposition.Children.Add(medicineComposition2);
             medicinePanel.Children.Add(StackPComposition);
 
-            var сontraindication = new List<String> { "Contraindication1", "Contraindication2", "Contraindication3" };
+            var сontraindication = new List<String>();
+            foreach (var item in m.MedicineContraindications)
+            {
+                сontraindication.Add(item.Contraindication.Description);
+            }
             var сontraindicationString = Regex.Replace(String.Join(", ", сontraindication), ".{25}", "$0\n");
             var medicineContraindication = CreateMedicineText("Medicine Contraindication: ", "#FFED635E");
             var medicineContraindication2 = CreateMedicineText(сontraindicationString, "#000000", false);
@@ -213,9 +245,11 @@ namespace MedHelper_UI
             StackPContraindication.Children.Add(medicineContraindication2);
             medicinePanel.Children.Add(StackPContraindication);
 
-            var interaction = new Dictionary<String, String> { { "Medicine1", "Interaction1" },
-                {"Medicine2", "Interaction2" },
-                {"Medicine3",  "Interaction3" } };
+            var interaction = new Dictionary<String, String>();
+            foreach (var item in m.MedicineInteractions)
+            {
+                interaction.Add(item.Composition.Description, item.Description);
+            }
             var medicineInteraction = CreateMedicineText("Medicine Interaction: ", "#FFED635E");
             var StackPInteraction = new StackPanel();
             StackPInteraction.Orientation = Orientation.Horizontal;
@@ -267,7 +301,7 @@ namespace MedHelper_UI
         }
         private void BtmEditPatientClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.DoctorFrame.Content = new Page_EditPatient(MainWindow,UserId);
+            MainWindow.DoctorFrame.Content = new Page_EditPatient(MainWindow, UserId);
         }
 
 

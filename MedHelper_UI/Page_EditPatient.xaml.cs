@@ -94,25 +94,33 @@ namespace MedHelper_UI
             }
             else
             {
-                //показати шо треба вибрати
+                MessageBox.Show("Please, choose gender", "Gender", MessageBoxButton.OK, MessageBoxImage.Hand);
             }
 
-            var str = "{\n" + $"\"UserName\": \"{username.Text}\",\n" +
-                      $"\"Gender\": \"{sex}\",\n" +
-                      $"\"MedicineIds\": {JsonConvert.SerializeObject(medecine)},\n" +
-                      $"\"DiseasesIds\": {JsonConvert.SerializeObject(diseases)},\n" +
-                      $"\"Birthdate\": {JsonConvert.SerializeObject(date.SelectedDate.Value)}\n" + "}";
-            var httpContent = new StringContent(str, Encoding.UTF8,
-                                    "application/json");
-            httpContent.Headers.ContentType.MediaType = "application/json";
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", MainWindow.mainWindow.token);
-            var response = client.PutAsync($"https://localhost:44374/api/v1/patient/{UserId}", httpContent);
-            response.Wait();
-            if (response.Result.IsSuccessStatusCode)
+            if (sex!="")
             {
-                MainWindow.DoctorFrame.Content = new Page_DoctorInfo(MainWindow);
+                var str = "{\n" + $"\"UserName\": \"{username.Text}\",\n" +
+                          $"\"Gender\": \"{sex}\",\n" +
+                          $"\"MedicineIds\": {JsonConvert.SerializeObject(medecine)},\n" +
+                          $"\"DiseasesIds\": {JsonConvert.SerializeObject(diseases)},\n" +
+                          $"\"Birthdate\": {JsonConvert.SerializeObject(date.SelectedDate.Value)}\n" + "}";
+                var httpContent = new StringContent(str, Encoding.UTF8,
+                                        "application/json");
+                httpContent.Headers.ContentType.MediaType = "application/json";
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", MainWindow.mainWindow.token);
+                var response = client.PutAsync($"https://localhost:44374/api/v1/patient/{UserId}", httpContent);
+                response.Wait();
+                if (response.Result.IsSuccessStatusCode)
+                {
+                    MainWindow.DoctorFrame.Content = new Page_DoctorInfo(MainWindow);
+                }
+                else
+                {
+                    MessageBox.Show("Something went wrong. Try again", "Error", MessageBoxButton.OK, MessageBoxImage.Hand);
+                }
             }
-        }
+            }
+        
         private void setMedicine()
         {
             var responseMedicine = client.GetAsync("https://localhost:44374/api/v1/medicines");
@@ -140,7 +148,7 @@ namespace MedHelper_UI
             {
                 var res = JsonConvert.DeserializeObject<dynamic>(responseMedicine.Result.Content.ReadAsStringAsync().Result);
                 var deseases = res.result;
-                List < Disease > diseasesdeserialized = new List<Disease>();
+                List <Disease> diseasesdeserialized = new List<Disease>();
                 foreach (var item in deseases)
                 {
                     var desease = (Disease)JsonConvert.DeserializeObject<Disease>(item.ToString());

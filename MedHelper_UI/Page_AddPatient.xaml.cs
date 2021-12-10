@@ -37,7 +37,7 @@ namespace MedHelper_UI
 
         public Page_AddPatient(Page_Doctor mainWindow)
         {
-            
+
             InitializeComponent();
             MainWindow = mainWindow;
             setMedicine();
@@ -66,7 +66,7 @@ namespace MedHelper_UI
             if (responseMedicine.Result.IsSuccessStatusCode)
             {
                 var res = JsonConvert.DeserializeObject<dynamic>(responseMedicine.Result.Content.ReadAsStringAsync().Result);
-                var medicines= res.result;
+                var medicines = res.result;
                 foreach (var item in medicines)
                 {
                     cb.Items.Add(JsonConvert.DeserializeObject<Medicine>(item.ToString()));
@@ -120,33 +120,40 @@ namespace MedHelper_UI
         private void AddPatient()
         {
             var sex = "";
-            if((bool)male.IsChecked)
+            if ((bool)male.IsChecked)
             {
                 sex = "one";
             }
-            else if((bool)female.IsChecked)
+            else if ((bool)female.IsChecked)
             {
                 sex = "two";
             }
             else
             {
-                //показати шо треба вибрати
-            }
+                MessageBox.Show("Please, choose gender", "Gender", MessageBoxButton.OK, MessageBoxImage.Hand);
 
-            var str = "{\n" + $"\"UserName\": \"{username.Text}\",\n" +
-                      $"\"Gender\": \"{sex}\",\n" +
-                      $"\"MedicineIds\": {JsonConvert.SerializeObject(medecine)},\n" +
-                      $"\"DiseasesIds\": {JsonConvert.SerializeObject(diseases)},\n" +
-                      $"\"Birthdate\": {JsonConvert.SerializeObject(date.SelectedDate.Value)}\n" + "}";
-            var httpContent = new StringContent(str, Encoding.UTF8,
-                                    "application/json");
-            httpContent.Headers.ContentType.MediaType = "application/json";
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", MainWindow.mainWindow.token);
-            var response = client.PostAsync("https://localhost:44374/api/v1/patient", httpContent);
-            response.Wait();
-            if(response.Result.IsSuccessStatusCode)
+            }
+            if (sex != "")
             {
-                MainWindow.DoctorFrame.Content = new Page_DoctorInfo(MainWindow);
+                var str = "{\n" + $"\"UserName\": \"{username.Text}\",\n" +
+                          $"\"Gender\": \"{sex}\",\n" +
+                          $"\"MedicineIds\": {JsonConvert.SerializeObject(medecine)},\n" +
+                          $"\"DiseasesIds\": {JsonConvert.SerializeObject(diseases)},\n" +
+                          $"\"Birthdate\": {JsonConvert.SerializeObject(date.SelectedDate.Value)}\n" + "}";
+                var httpContent = new StringContent(str, Encoding.UTF8,
+                                        "application/json");
+                httpContent.Headers.ContentType.MediaType = "application/json";
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", MainWindow.mainWindow.token);
+                var response = client.PostAsync("https://localhost:44374/api/v1/patient", httpContent);
+                response.Wait();
+                if (response.Result.IsSuccessStatusCode)
+                {
+                    MainWindow.DoctorFrame.Content = new Page_DoctorInfo(MainWindow);
+                }
+                else
+                {
+                    MessageBox.Show("Something went wrong. Try again", "Error", MessageBoxButton.OK, MessageBoxImage.Hand);
+                }
             }
         }
         private void BtmAddPatientToDb(object sender, RoutedEventArgs e)

@@ -7,6 +7,7 @@ using MedHelper_API.Service.Contracts;
 using MedHelper_EF.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using MyApi.Controllers;
 using Newtonsoft.Json;
@@ -20,11 +21,13 @@ namespace MedHelper_API.Controllers
     {
         private readonly MedHelperDB _context;
         private readonly IMapper _mapper;
+        private readonly ILogger<DataController> _logger;
 
-        public DataController(MedHelperDB context, IMapper mapper)
+        public DataController(MedHelperDB context, IMapper mapper, ILogger<DataController> logger)
         {
             _context = context;
             _mapper = mapper;
+            _logger = logger;
         }
         
         [HttpGet("medicines")]
@@ -49,7 +52,7 @@ namespace MedHelper_API.Controllers
                 })
                 .ToListAsync();
             // var result = _mapper.Map<List<Medicine>, List<MedicineResponse>>(medicines);
-
+            _logger.LogInformation("Returned all medicines.");
             return Ok(medicines);
         }
         
@@ -74,7 +77,7 @@ namespace MedHelper_API.Controllers
                     })
                 })
                 .FirstOrDefaultAsync(obj => obj.MedicineID == id);
-
+            _logger.LogInformation($"Returned medicine with id {id}.");
             return Ok(medicine);
         }
         
@@ -83,7 +86,7 @@ namespace MedHelper_API.Controllers
         {
             var diseases = await _context.Diseases.ToListAsync();
             var result = _mapper.Map<List<Disease>, List<DiseaseResponse>>(diseases);
-
+            _logger.LogInformation("Returned all diseases.");
             return Ok(result);
         }
         
@@ -91,7 +94,7 @@ namespace MedHelper_API.Controllers
         public async Task<ActionResult<IEnumerable<MedicineResponse>>> GetDisease(int id)
         {
             var diseases = await _context.Diseases.FirstOrDefaultAsync(obj => obj.DiseaseID == id);
-
+            _logger.LogInformation($"Returned disease with {id}.");
             return Ok(new
             {
                 diseases.DiseaseID,
@@ -180,7 +183,7 @@ namespace MedHelper_API.Controllers
                     Contraindications = grouped.Select(obj => obj.ContraindicationDescription).Distinct(),
                     MedicineInteractions = grouped.Select(obj => obj.MedicineInteractionDescription).Distinct()
                 };
-            
+            _logger.LogInformation($"Returned list of medicines according to the search and contraindications of a patient with id {id}.");
             return Ok(response);
         }
     }

@@ -9,6 +9,7 @@ using MedHelper_EF.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using MyApi.Controllers;
 
@@ -21,11 +22,13 @@ namespace MedHelper_API.Controllers
     {
         private readonly IPatientService _patientService;
         private readonly MedHelperDB _context;
+        private readonly ILogger<PatientController> _logger;
 
-        public PatientController(IPatientService patientService, MedHelperDB context)
+        public PatientController(IPatientService patientService, MedHelperDB context, ILogger<PatientController>logger)
         {
             _patientService = patientService;
             _context = context;
+            _logger = logger;
         }
         
         [HttpGet]
@@ -64,7 +67,7 @@ namespace MedHelper_API.Controllers
                                     mc => mc.Contraindication.Description)
                         })
                     });
-                
+                _logger.LogInformation($"Returned all patients for doctor with id {userId}.");
                 return Ok(result);
             }
             catch (SecurityTokenValidationException e)
@@ -111,7 +114,8 @@ namespace MedHelper_API.Controllers
 
                 if (result is null)
                     return NotFound("Patient hasn't been found.");
-            
+
+                _logger.LogInformation($"Returned patient with id {id} for doctor with id {userId}.");
                 return Ok(result);
             }
             catch (SecurityTokenValidationException e)
@@ -127,7 +131,8 @@ namespace MedHelper_API.Controllers
             {
                 var userId = GetCurrentUserId();
                 var patient = await _patientService.Create(patientDto, userId);
-            
+
+                _logger.LogInformation($"Doctor with id {userId} registered a new patient.");
                 return CreatedAtAction(nameof(GetOne), new { id = patient.PatientID }, patient);
             }
             catch (SecurityTokenValidationException e)
@@ -143,7 +148,8 @@ namespace MedHelper_API.Controllers
             {
                 var userId = GetCurrentUserId();
                 await _patientService.Update(id, patientDto, userId);
-            
+
+                _logger.LogInformation($"Doctor with id {userId} updated patient with id {id}.");
                 return NoContent();
             }
             catch (SecurityTokenValidationException e)
@@ -163,7 +169,7 @@ namespace MedHelper_API.Controllers
             {
                 var userId = GetCurrentUserId();
                 await _patientService.Delete(id, userId);
-                
+                _logger.LogInformation($"Doctor with id { userId} deleted patient with id { id}.");
                 return NoContent();
             }
             catch (SecurityTokenValidationException e)

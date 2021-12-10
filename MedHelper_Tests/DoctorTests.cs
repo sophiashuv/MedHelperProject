@@ -21,7 +21,7 @@ namespace MedHelper_Tests
     public class DoctorTests
     {
         private readonly Mock<IDoctorService> _doctorService = new();
-
+        private readonly Mock<ILogger<DoctorController>> _logger = new();
         private Doctor doctor = new Doctor()
         {
             DoctorID = 100,
@@ -49,7 +49,7 @@ namespace MedHelper_Tests
             }, "mock"));
 
             _doctorService.Setup(serv => serv.Update(update, It.IsAny<int>()));
-            var controller = new DoctorController(_doctorService.Object);
+            var controller = new DoctorController(_doctorService.Object, _logger.Object);
             controller.ControllerContext = new ControllerContext()
             {
                 HttpContext = new DefaultHttpContext() { User = fakeDoctor }
@@ -78,7 +78,7 @@ namespace MedHelper_Tests
             }, "mock"));
 
             _doctorService.Setup(serv => serv.Update(update, It.IsAny<int>()));
-            var controller = new DoctorController(_doctorService.Object);
+            var controller = new DoctorController(_doctorService.Object, _logger.Object);
             controller.ControllerContext = new ControllerContext()
             {
                 HttpContext = new DefaultHttpContext() { User = Doctor }

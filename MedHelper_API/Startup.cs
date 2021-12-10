@@ -91,7 +91,9 @@ namespace MedHelper_API
             }
             
             app.UseApiResponseAndExceptionWrapper(new AutoWrapperOptions { 
-                UseApiProblemDetailsException = true 
+                UseApiProblemDetailsException = true,
+                EnableResponseLogging = false, 
+                EnableExceptionLogging = false
             });
 
             app.UseRouting();

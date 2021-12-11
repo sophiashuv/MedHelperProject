@@ -18,10 +18,6 @@ namespace MedHelper_API.Controllers
     public class DoctorController: BaseController
     {
         private readonly IDoctorService _service;
-
-        public DoctorController(IDoctorService service)
-        {
-            _service = service;
         private readonly ILogger<DoctorController> _logger;
 
         public DoctorController(IDoctorService service, ILogger<DoctorController> logger)

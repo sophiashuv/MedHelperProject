@@ -22,11 +22,6 @@ namespace MedHelper_API.Controllers
     {
         private readonly IPatientService _patientService;
         private readonly MedHelperDB _context;
-
-        public PatientController(IPatientService patientService, MedHelperDB context)
-        {
-            _patientService = patientService;
-            _context = context;
         private readonly ILogger<PatientController> _logger;
 
         public PatientController(IPatientService patientService, MedHelperDB context, ILogger<PatientController>logger)

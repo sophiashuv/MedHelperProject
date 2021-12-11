@@ -6,6 +6,7 @@ using MedHelper_API.Responses;
 using MedHelper_API.Service.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using MyApi.Controllers;
 
@@ -21,6 +22,12 @@ namespace MedHelper_API.Controllers
         public DoctorController(IDoctorService service)
         {
             _service = service;
+        private readonly ILogger<DoctorController> _logger;
+
+        public DoctorController(IDoctorService service, ILogger<DoctorController> logger)
+        {
+            _service = service;
+            _logger = logger;
         }
 
         [HttpPut]
@@ -30,7 +37,8 @@ namespace MedHelper_API.Controllers
             {
                 var userId = GetCurrentUserId();
                 await _service.Update(doctor, userId);
-            
+
+                _logger.LogInformation($"Updated doctor with id {userId}.");
                 return NoContent();
             }
             catch (SecurityTokenValidationException e)

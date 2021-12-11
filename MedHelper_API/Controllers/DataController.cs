@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace MedHelper_API.Controllers
     // [Authorize]
     [ApiController]
     [Route("api/v1")]
-    public class DataController: BaseController
+    public class DataController : BaseController
     {
         private readonly MedHelperDB _context;
         private readonly IMapper _mapper;
@@ -30,7 +31,7 @@ namespace MedHelper_API.Controllers
             _mapper = mapper;
             _logger = logger;
         }
-        
+
         [HttpGet("medicines")]
         public async Task<ActionResult> GetAllMedicines() // <IEnumerable<MedicineResponse>>
         {
@@ -56,7 +57,7 @@ namespace MedHelper_API.Controllers
             _logger.LogInformation("Returned all medicines.");
             return Ok(medicines);
         }
-        
+
         [HttpGet("medicines/{id}")]
         public async Task<ActionResult> GetMedicine(int id) // <IEnumerable<MedicineResponse>>
         {
@@ -81,7 +82,7 @@ namespace MedHelper_API.Controllers
             _logger.LogInformation($"Returned medicine with id {id}.");
             return Ok(medicine);
         }
-        
+
         [HttpGet("diseases")]
         public async Task<ActionResult<IEnumerable<MedicineResponse>>> GetAllDiseases()
         {
@@ -90,7 +91,7 @@ namespace MedHelper_API.Controllers
             _logger.LogInformation("Returned all diseases.");
             return Ok(result);
         }
-        
+
         [HttpGet("diseases/{id}")]
         public async Task<ActionResult<IEnumerable<MedicineResponse>>> GetDisease(int id)
         {
@@ -103,8 +104,8 @@ namespace MedHelper_API.Controllers
             });
         }
 
-        [HttpGet("patient/{id}/search={search}")]
-        public async Task<ActionResult> Search(int id, string search)
+        [HttpGet("patient/{id}/allmedicines")]
+        public async Task<ActionResult> Search(int id)
         {
             var user = GetCurrentUserId();
 
@@ -143,49 +144,67 @@ namespace MedHelper_API.Controllers
                 .Include(obj => obj.MedicineCompositions)
                 .Include(obj => obj.MedicineContraindications)
                 .Include(obj => obj.MedicineInteractions)
-                .Where(obj => obj.pharmacotherapeuticGroup.ToLower().Contains(search.ToLower()))
                 .ToListAsync();
-            
+
             var compositions = await _context.Compositions.ToListAsync();
             var contraindications = await _context.Contraindications.ToListAsync();
             var interactions = await _context.MedicineInteraction.Include(obj => obj.Composition).ToListAsync();
-            
-            var responseData = from medicine in medicines
-                from composition in medicine.MedicineCompositions
-                join comp in compositions on composition.CompositionID equals comp.CompositionID
-                from contraindication in medicine.MedicineContraindications
-                join contr in contraindications on contraindication.ContraindicationID equals contr.ContraindicationID
-                from interaction in medicine.MedicineInteractions
-                join intr in interactions on interaction.MedicineInteractionID equals intr.MedicineInteractionID
-                where !patientDiseases.Select(obj => obj.Title).Contains(comp.Description)
-                select new
+            var responseData = medicines.Select(obj => new
+            {
+                obj.Name,
+                obj.pharmacotherapeuticGroup,
+                obj.MedicineID,
+                Compositions = compositions.Where(x => obj.MedicineCompositions
+                .FirstOrDefault(y => y.CompositionID == x.CompositionID) != null).Select(x => x.Description),
+                Contraindications = contraindications.Where(x => obj.MedicineContraindications
+                .FirstOrDefault(y => y.ContraindicationID == x.ContraindicationID) != null).Select(x => x.Description),
+                MedicineInteractions = interactions.Where(x => obj.MedicineInteractions
+                .FirstOrDefault(y => y.MedicineInteractionID == x.MedicineInteractionID) != null).Select(x => new
                 {
-                    medicine.MedicineID,
-                    medicine.Name,
-                    medicine.pharmacotherapeuticGroup,
-                    CompositionDescription = comp.Description,
-                    ContraindicationDescription = contr.Description,
-                    MedicineInteractionDescription = new
-                    {
-                        intr.Description,
-                        CompositionDescription = intr.Composition.Description
-                    } 
-                };
-            
-            var response = from medicine in responseData
-                group medicine by new { medicine.MedicineID, medicine.Name, medicine.pharmacotherapeuticGroup }
-                into grouped
-                select new
-                {
-                    grouped.Key.MedicineID,
-                    grouped.Key.Name,
-                    grouped.Key.pharmacotherapeuticGroup,
-                    Compositions = grouped.Select(obj => obj.CompositionDescription).Distinct(),
-                    Contraindications = grouped.Select(obj => obj.ContraindicationDescription).Distinct(),
-                    MedicineInteractions = grouped.Select(obj => obj.MedicineInteractionDescription).Distinct()
-                };
+                    Description = x.Description,
+                    CompositionDescription = x.Composition.Description
+                })
+            });
+            //var responseData = from medicine in medicines
+            //                   from composition in medicine.MedicineCompositions.DefaultIfEmpty()
+            //                   join comp in compositions on composition.CompositionID equals comp.CompositionID
+            //                   from contraindication in medicine.MedicineContraindications.DefaultIfEmpty()
+            //                   join contr in contraindications on contraindication.ContraindicationID equals contr.ContraindicationID
+            //                   from interaction in medicine.MedicineInteractions.DefaultIfEmpty()
+            //                   join intr in interactions on interaction.MedicineInteractionID equals intr.MedicineInteractionID 
+            //                   select new
+            //                   {
+            //                       medicine.MedicineID,
+            //                       medicine.Name,
+            //                       medicine.pharmacotherapeuticGroup,
+            //                       CompositionDescription = comp?.Description ?? String.Empty,
+            //                       ContraindicationDescription = contr?.Description ?? String.Empty,
+            //                       MedicineInteractionDescription = new
+            //                       {
+            //                           Description = intr?.Description ?? String.Empty,
+            //                           CompositionDescription = intr?.Composition.Description ?? String.Empty
+            //                       }
+            //                   };
+            //var InteractionList = new[] { new { Description = "", CompositionDescription = "" } }.ToList();
+            //InteractionList.Clear();
+            //var response = from medicine in responseData
+            //               group medicine by new { medicine.MedicineID, medicine.Name, medicine.pharmacotherapeuticGroup }
+            //    into grouped
+            //               select new
+            //               {
+            //                   grouped.Key.MedicineID,
+            //                   grouped.Key.Name,
+            //                   grouped.Key.pharmacotherapeuticGroup,
+            //                   Compositions = grouped.Select(obj => obj.CompositionDescription)?.Distinct() ?? new List<string>(),
+            //                   Contraindications = grouped.Select(obj => obj.ContraindicationDescription)?.Distinct() ?? new List<string>(),
+            //                   MedicineInteractions = grouped.Select(obj => obj.MedicineInteractionDescription)?.Distinct() ?? InteractionList
+            //               };
+            foreach (var item in patientDiseases)
+            {
+                responseData = responseData.Where(x => !x.Contraindications.Contains(item.Title));
+            }
             _logger.LogInformation($"Returned list of medicines according to the search and contraindications of a patient with id {id}.");
-            return Ok(response);
+            return Ok(responseData);
         }
     }
 }

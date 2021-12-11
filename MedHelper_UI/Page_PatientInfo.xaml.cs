@@ -110,7 +110,7 @@ namespace MedHelper_UI
                 }
             }
 
-            var medicineResponse = client.GetAsync($"https://localhost:44374/api/v1/patient/{UserId}/search=п");
+            var medicineResponse = client.GetAsync($"https://localhost:44374/api/v1/patient/{UserId}/allmedicines");
             medicineResponse.Wait();
             if (medicineResponse.Result.IsSuccessStatusCode)
             {

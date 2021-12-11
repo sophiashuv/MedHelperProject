@@ -31,17 +31,17 @@ namespace MedHelper_Tests
         private readonly Mock<MedHelperDB> _context = new();
 
         private ClaimsPrincipal Doctor = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
-            {
-                new Claim(ClaimTypes.Name, "example name"),
-                new Claim(ClaimTypes.NameIdentifier, "1"),
-                new Claim("DoctorID", "1"),
-            }, "mock"));
+        {
+            new Claim(ClaimTypes.Name, "example name"),
+            new Claim(ClaimTypes.NameIdentifier, "1"),
+            new Claim("DoctorID", "1"),
+        }, "mock"));
 
         private ClaimsPrincipal fakeDoctor = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
-            {
-                new Claim(ClaimTypes.Name, "example name"),
-                new Claim(ClaimTypes.NameIdentifier, "1"),
-            }, "mock"));
+        {
+            new Claim(ClaimTypes.Name, "example name"),
+            new Claim(ClaimTypes.NameIdentifier, "1"),
+        }, "mock"));
 
         private PatientResponse TestPatient1 = new PatientResponse()
         {

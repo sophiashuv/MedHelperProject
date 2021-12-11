@@ -22,14 +22,6 @@ namespace MedHelper_Tests
     {
         private readonly Mock<IDoctorService> _doctorService = new();
         private readonly Mock<ILogger<DoctorController>> _logger = new();
-        private Doctor doctor = new Doctor()
-        {
-            DoctorID = 100,
-            FirstName = "TestDoctor",
-            LastName = "TestDoctor",
-            Email = "testdoctor@gmail.com",
-            Pass = "password"
-        };
 
         [Fact]
         public async Task UpdatePatient_ReturnsUnauthorized()

@@ -72,7 +72,8 @@ namespace MedHelper_API.Service
 
             var medicines = await _medicineRepository.GetAllWithoutParams();
             var diseases = await _diseaseRepository.GetAllWithoutParams();
-
+            exPatient.PatientDiseases.Clear();
+            exPatient.PatientMedicines.Clear();
             foreach (var medicineId in patient.MedicineIds)
             {
                 var medicine = medicines.FirstOrDefault(obj => obj.MedicineID == medicineId);

@@ -28,6 +28,8 @@ namespace MedHelper_UI
         {
             InitializeComponent();
             MainWindow = mainWindow;
+            email.GotFocus += RemoveText;
+            email.LostFocus += AddText;
         }
         private void Login()
         {
@@ -68,6 +70,24 @@ namespace MedHelper_UI
         private void BtmClickRegisterSignInPage(object sender, RoutedEventArgs e)
         {
             MainWindow.MainFrame.Content = new Page_signUp(MainWindow);
+        }
+
+        public void RemoveText(object sender, EventArgs e)
+        {
+            if (email.Text == "example@email.com")
+            {
+                email.Text = "";
+                email.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#000000"));
+            }
+        }
+
+        public void AddText(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(email.Text))
+            {
+                email.Text = "example@email.com";
+                email.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF716E6E"));
+            }
         }
     }
 }

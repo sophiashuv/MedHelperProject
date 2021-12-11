@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace MedHelper_UI
 {
@@ -21,6 +23,8 @@ namespace MedHelper_UI
     public partial class MainWindow : Window
     {
         public string token;
+
+        DispatcherTimer timer = new DispatcherTimer(); 
         public MainWindow()
         {
             InitializeComponent();
@@ -29,11 +33,13 @@ namespace MedHelper_UI
             logout.IsEnabled = false;
             cabinet.Visibility = Visibility.Collapsed;
             logout.Visibility = Visibility.Collapsed;
+            Loading();
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            MainFrame.Content = new Page_Welcome();
+            //MainFrame.Content = new Page_Welcome();
+            
         }
 
         private void BtmClickSignIn(object sender, RoutedEventArgs e)
@@ -72,6 +78,32 @@ namespace MedHelper_UI
         private void BtmClickDoctor(object sender, RoutedEventArgs e)
         {
             MainFrame.Content = new Page_Doctor(this);
+        }
+
+        private void MediaElement_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            Media.Position = new TimeSpan(0, 0, 1);
+            Media.Play();
+        }
+
+        private void timer_tick(object sender, EventArgs e)
+        {
+            timer.Stop();
+            Media.Visibility = Visibility.Hidden;
+            Header.Visibility = Visibility.Visible;
+            login.Visibility = Visibility.Visible;
+            signin.Visibility = Visibility.Visible;
+            mainWin.Visibility = Visibility.Visible;
+            Footer.Visibility = Visibility.Visible;
+            MainFrame.Content = new Page_Welcome();
+        }
+
+        void Loading()
+        {
+            timer.Tick += timer_tick;
+            timer.Interval = new TimeSpan(0, 0, 10);
+            timer.Start();
+            Media.Play();
         }
     }
 }

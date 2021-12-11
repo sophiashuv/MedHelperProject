@@ -29,6 +29,13 @@ namespace MedHelper_UI
         {
             InitializeComponent();
             MainWindow = mainWindow;
+
+            firstname.GotFocus += RemoveTextName;
+            firstname.LostFocus += AddTextName;
+            lastname.GotFocus += RemoveTextSurName;
+            lastname.LostFocus += AddTextSurName;
+            email.GotFocus += RemoveTextEmail;
+            email.LostFocus += AddTextEmail;
         }
         private void Register()
         {
@@ -71,6 +78,60 @@ namespace MedHelper_UI
         private void BtmClickRegister(object sender, RoutedEventArgs e)
         {
             Register();
+        }
+
+        public void RemoveTextName(object sender, EventArgs e)
+        {
+            if (firstname.Text == "First Name")
+            {
+                firstname.Text = "";
+                firstname.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#000000"));
+            }
+        }
+
+        public void AddTextName(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(firstname.Text))
+            {
+                firstname.Text = "First Name";
+                firstname.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF716E6E"));
+            }
+        }
+
+        public void RemoveTextSurName(object sender, EventArgs e)
+        {
+            if (lastname.Text == "Last Name")
+            {
+                lastname.Text = "";
+                lastname.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#000000"));
+            }
+        }
+
+        public void AddTextSurName(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(lastname.Text))
+            {
+                lastname.Text = "Last Name";
+                lastname.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF716E6E"));
+            }
+        }
+
+        public void RemoveTextEmail(object sender, EventArgs e)
+        {
+            if (email.Text == "Email address")
+            {
+                email.Text = "";
+                email.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#000000"));
+            }
+        }
+
+        public void AddTextEmail(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(email.Text))
+            {
+                email.Text = "Email address";
+                email.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF716E6E"));
+            }
         }
     }
 }

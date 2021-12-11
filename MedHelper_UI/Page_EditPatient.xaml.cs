@@ -39,6 +39,9 @@ namespace MedHelper_UI
             setInformation();
             setMedicine();
             setDiseases();
+
+            username.GotFocus += RemoveText;
+            username.LostFocus += AddText;
         }
 
         private void setInformation()
@@ -216,6 +219,25 @@ namespace MedHelper_UI
                 diseases.RemoveAt(textBoxesDisasters.Count - 1);
                 textBoxesDisasters.Remove(textBoxesDisasters[textBoxesDisasters.Count - 1]);
                 StackP2.Children.Remove(StackP2.Children[textBoxesDisasters.Count]);
+            }
+        }
+
+
+        public void RemoveText(object sender, EventArgs e)
+        {
+            if (username.Text == "Name")
+            {
+                username.Text = "";
+                username.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#000000"));
+            }
+        }
+
+        public void AddText(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(username.Text))
+            {
+                username.Text = "Name";
+                username.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF716E6E"));
             }
         }
     }

@@ -48,26 +48,6 @@ namespace MedHelper_UI
             Search(FindResults.Text);
         }
 
-        private void medicine22_Click(object sender, RoutedEventArgs e)
-        {
-            StackPP.Children.Clear();
-            var button_num = 0;
-
-
-            for (int i = 0; i < button_num + 1; i++)
-            {
-                StackPP.Children.Add(buttons[i]);
-            }
-
-            // StackPP.Children.Add(medicinePanel);
-
-            for (int i = button_num + 1; i < medicines.Count(); i++)
-            {
-                StackPP.Children.Add(buttons[i]);
-            }
-
-        }
-
         private void medicine_Click(object sender, RoutedEventArgs e)
         {
             var button = (Button)sender;

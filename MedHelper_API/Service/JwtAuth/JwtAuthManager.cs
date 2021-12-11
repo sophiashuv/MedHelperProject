@@ -22,7 +22,7 @@ namespace JwtAuth
             _jwtTokenConfig = jwtTokenConfig;
         }
 
-        public async Task<AuthResponse> GenerateTokens(List<Claim> claims)
+        public Task<AuthResponse> GenerateTokens(List<Claim> claims)
         {
             var now = DateTime.Now;
             var shouldAddAudienceClaim = string.IsNullOrWhiteSpace(claims?.FirstOrDefault(x =>
@@ -38,11 +38,12 @@ namespace JwtAuth
                     SecurityAlgorithms.HmacSha256Signature));
             
             var accessToken = new JwtSecurityTokenHandler().WriteToken(jwtToken);
+
             
-            return new AuthResponse
+            return Task.FromResult(new AuthResponse
             {
                 AccessToken = accessToken
-            };
+            });
         }
     }
 }

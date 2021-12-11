@@ -1,6 +1,5 @@
-﻿using System;
-using MedHelper_EF.Models;
-using System.Linq;
+﻿using MedHelper_EF.Models;
+using System;
 
 namespace ConsoleTest
 {

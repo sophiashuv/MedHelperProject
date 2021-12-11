@@ -18,25 +18,25 @@ namespace MedHelper_API.Repository
         }
 
         // temp 
-        public async Task<List<TEntity>> GetAllWithoutParams()
+        public Task<List<TEntity>> GetAllWithoutParams()
         {
             var entities = _context.Set<TEntity>().AsEnumerable();
             var result = entities.ToList();
 
-            return result;
+            return Task.FromResult(result);
         }
 
         // temp 
-        public async Task<List<TEntity>> GetByIds(List<int> ids)
+        public Task<List<TEntity>> GetByIds(List<int> ids)
         {
             var entities = _context.Set<TEntity>().AsEnumerable();
             var result = entities.Where(obj => ids.Contains(obj.GetId())).ToList();
 
-            return result;
+            return Task.FromResult(result);
         }
 
         // temp 
-        public async Task<TEntity> GetById(int id)
+        public Task<TEntity> GetById(int id)
         {
             // Console.Write(id);
             // // var result = await _context.Set<TEntity>(). FirstOrDefaultAsync(obj => obj.GetId() == id);
@@ -47,7 +47,7 @@ namespace MedHelper_API.Repository
             var entities = _context.Set<TEntity>().AsEnumerable();
             var result = entities.FirstOrDefault(obj => obj.GetId() == id);
             if (result == null) throw new KeyNotFoundException($"{typeof(TEntity)} hasn't been found.");
-            return result;
+            return Task.FromResult(result);
         }
 
         public async Task<TEntity> Create(TEntity item)

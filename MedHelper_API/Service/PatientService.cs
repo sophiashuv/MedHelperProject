@@ -26,58 +26,7 @@ namespace MedHelper_API.Service
             _diseaseRepository = diseaseRepository;
         }
 
-        public async Task<PatientResponse> GetOne(int patientId, int userId)
-        {
-            var patient = await _patientRepository.GetPatient(userId, patientId);
-  
-            var result = _mapper.Map<PatientResponse>(patient);
-            result.Medicines = new List<MedicineResponse>();
-            result.Diseases = new List<DiseaseResponse>();
-            foreach (var patientMedicine in patient.PatientMedicines)
-            {
-                var objMedicine = await _medicineRepository.GetById(patientMedicine.MedicineID);
-                var medicineResponse = _mapper.Map<MedicineResponse>(objMedicine);
-                result.Medicines.Add(medicineResponse);
-                
-            }
-                
-            foreach (var patientDisease in patient.PatientDiseases)
-            {
-                var objMedicine = await _diseaseRepository.GetById(patientDisease.DiseaseID);
-                result.Diseases.Add(_mapper.Map<DiseaseResponse>(objMedicine));
-            }
-            return result;
-        }
-
-        public async Task<List<PatientResponse>> GetAll(int userId)
-        {
-            var patients = await _patientRepository.GetAll(userId);
-            var response = new List<PatientResponse>();
-            
-            foreach (var patient in patients)
-            {
-                var obj = _mapper.Map<PatientResponse>(patient);
-                obj.Medicines = new List<MedicineResponse>();
-                obj.Diseases = new List<DiseaseResponse>();
-                
-                foreach (var patientMedicine in patient.PatientMedicines)
-                {
-                    var objMedicine = await _medicineRepository.GetById(patientMedicine.MedicineID);
-                    obj.Medicines.Add(_mapper.Map<MedicineResponse>(objMedicine));
-                }
-                
-                foreach (var patientDisease in patient.PatientDiseases)
-                {
-                    var objMedicine = await _diseaseRepository.GetById(patientDisease.DiseaseID);
-                    obj.Diseases.Add(_mapper.Map<DiseaseResponse>(objMedicine));
-                }
-
-                response.Add(obj);
-            }
-
-            return response;
-        }
-
+        // FIXME 🤦‍
         public async Task<PatientResponse> Create(CreatePatientDto patient, int userId)
         {
             var mappedPatient = _mapper.Map<Patient>(patient);
@@ -108,6 +57,7 @@ namespace MedHelper_API.Service
             result.Medicines = createdPatient.PatientMedicines.Select(obj => 
                     _mapper.Map<MedicineResponse>(obj.Medicine)
                 ).ToList();
+            
             result.Diseases = createdPatient.PatientDiseases.Select(obj => 
                 _mapper.Map<DiseaseResponse>(obj.Disease)
             ).ToList();
@@ -120,16 +70,30 @@ namespace MedHelper_API.Service
             var exPatient = await _patientRepository.GetPatient(userId, patientId);
             _mapper.Map(patient, exPatient);
 
-            // foreach (var medicineId in patient.MedicineIds)
-            // {
-            //     var medicine = await _medicineRepository.GetById(medicineId);
-            //     var newMedicine = new PatientMedicine
-            //     {
-            //         Patient = exPatient,
-            //         Medicine = medicine
-            //     };
-            //     exPatient.PatientMedicines.Add(newMedicine);
-            // }
+            var medicines = await _medicineRepository.GetAllWithoutParams();
+            var diseases = await _diseaseRepository.GetAllWithoutParams();
+
+            foreach (var medicineId in patient.MedicineIds)
+            {
+                var medicine = medicines.FirstOrDefault(obj => obj.MedicineID == medicineId);
+                var newMedicine = new PatientMedicine
+                {
+                    Patient = exPatient,
+                    Medicine = medicine
+                };
+                exPatient.PatientMedicines.Add(newMedicine);
+            }
+            
+            foreach (var diseaseId in patient.DiseasesIds)
+            {
+                var disease = diseases.FirstOrDefault(obj => obj.DiseaseID == diseaseId);
+                var newDisease = new PatientDisease
+                {
+                    Patient = exPatient,
+                    Disease = disease
+                };
+                exPatient.PatientDiseases.Add(newDisease);
+            }
             
             await _patientRepository.Update(exPatient);
         }
@@ -137,11 +101,6 @@ namespace MedHelper_API.Service
         public async Task Delete(int patientId, int userId)
         {
             var exPatient = await _patientRepository.GetPatient(userId, patientId);
-            // foreach (var medicineId in exPatient.PatientMedicines)
-            // {
-            //     await _patientRepository.
-            // }
-
             await _patientRepository.Delete(exPatient);
         }
     }

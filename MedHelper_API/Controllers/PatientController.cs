@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MedHelper_API.Dto.Patient;
 using MedHelper_API.Responses;
 using MedHelper_API.Service.Contracts;
+using MedHelper_EF.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MyApi.Controllers;
 
@@ -17,10 +20,12 @@ namespace MedHelper_API.Controllers
     public class PatientController : BaseController
     {
         private readonly IPatientService _patientService;
+        private readonly MedHelperDB _context;
 
-        public PatientController(IPatientService patientService)
+        public PatientController(IPatientService patientService, MedHelperDB context)
         {
             _patientService = patientService;
+            _context = context;
         }
         
         [HttpGet]
@@ -29,9 +34,38 @@ namespace MedHelper_API.Controllers
             try
             {
                 var userId = GetCurrentUserId();
-                var patients = await _patientService.GetAll(userId);
+
+                var result = _context.Patients
+                    .Include(obj => obj.PatientDiseases)
+                    .Include(obj => obj.PatientMedicines)
+                    .Where(obj => obj.DoctorID == userId)
+                    .Select(obj => new
+                    {
+                        obj.PatientID,
+                        obj.DoctorID,
+                        obj.Birthdate,
+                        obj.Gender,
+                        obj.UserName,
+                        Diseases = obj.PatientDiseases.Select(d => d.Disease.Title),
+                        Medicines = obj.PatientMedicines.Select(medicine => new
+                        {
+                            medicine.Medicine.MedicineID,
+                            medicine.Medicine.Name,
+                            medicine.Medicine.pharmacotherapeuticGroup,
+                            MedicineCompositions =
+                                medicine.Medicine.MedicineCompositions.Select(c => c.Composition.Description),
+                            MedicineInteractions = medicine.Medicine.MedicineInteractions.Select(mi => new
+                            {
+                                CompositionDescription = mi.Composition.Description,
+                                mi.Description
+                            }),
+                            MedicineContraindications =
+                                medicine.Medicine.MedicineContraindications.Select(
+                                    mc => mc.Contraindication.Description)
+                        })
+                    });
                 
-                return Ok(patients);
+                return Ok(result);
             }
             catch (SecurityTokenValidationException e)
             {
@@ -45,13 +79,40 @@ namespace MedHelper_API.Controllers
             try
             {
                 var userId = GetCurrentUserId();
-                
-                var product = await _patientService.GetOne(id, userId);
 
-                if (product is null)
-                    return NotFound("Product hasn't been found.");
+                var result = _context.Patients
+                    .Include(obj => obj.PatientDiseases)
+                    .Include(obj => obj.PatientMedicines)
+                    .Select(obj => new
+                    {
+                        obj.PatientID,
+                        obj.DoctorID,
+                        obj.Birthdate,
+                        obj.Gender,
+                        obj.UserName,
+                        Diseases = obj.PatientDiseases.Select(d => d.Disease.Title),
+                        Medicines = obj.PatientMedicines.Select(medicine => new
+                        {
+                            medicine.Medicine.MedicineID,
+                            medicine.Medicine.Name,
+                            medicine.Medicine.pharmacotherapeuticGroup,
+                            MedicineCompositions =
+                                medicine.Medicine.MedicineCompositions.Select(c => c.Composition.Description),
+                            MedicineInteractions = medicine.Medicine.MedicineInteractions.Select(mi => new
+                            {
+                                CompositionDescription = mi.Composition.Description,
+                                mi.Description
+                            }),
+                            MedicineContraindications =
+                                medicine.Medicine.MedicineContraindications.Select(
+                                    mc => mc.Contraindication.Description)
+                        })
+                    }).FirstOrDefault(obj => obj.DoctorID == userId && obj.PatientID == id);
+
+                if (result is null)
+                    return NotFound("Patient hasn't been found.");
             
-                return Ok(product);
+                return Ok(result);
             }
             catch (SecurityTokenValidationException e)
             {

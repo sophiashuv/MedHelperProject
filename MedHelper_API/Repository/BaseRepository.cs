@@ -16,7 +16,26 @@ namespace MedHelper_API.Repository
         {
             _context = postgresDbContext;
         }
-        
+
+        // temp 
+        public async Task<List<TEntity>> GetAllWithoutParams()
+        {
+            var entities = _context.Set<TEntity>().AsEnumerable();
+            var result = entities.ToList();
+
+            return result;
+        }
+
+        // temp 
+        public async Task<List<TEntity>> GetByIds(List<int> ids)
+        {
+            var entities = _context.Set<TEntity>().AsEnumerable();
+            var result = entities.Where(obj => ids.Contains(obj.GetId())).ToList();
+
+            return result;
+        }
+
+        // temp 
         public async Task<TEntity> GetById(int id)
         {
             // Console.Write(id);
@@ -27,6 +46,7 @@ namespace MedHelper_API.Repository
             // return result;
             var entities = _context.Set<TEntity>().AsEnumerable();
             var result = entities.FirstOrDefault(obj => obj.GetId() == id);
+            if (result == null) throw new KeyNotFoundException($"{typeof(TEntity)} hasn't been found.");
             return result;
         }
 

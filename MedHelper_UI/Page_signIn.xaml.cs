@@ -55,6 +55,11 @@ namespace MedHelper_UI
                 MainWindow.signin.Visibility = Visibility.Collapsed;
                 MainWindow.MainFrame.Content = new Page_Doctor(MainWindow);
             }
+            else
+            {
+                MessageBox.Show("Invalid credentials. Try again", "Invalid credentials", MessageBoxButton.OK, MessageBoxImage.Hand);
+            }
+
 
         }
         private void BtmClickSignInPage(object sender, RoutedEventArgs e)

@@ -9,5 +9,6 @@ namespace MedHelper_API.Responses
         public string pharmacotherapeuticGroup { get; set; }
         public List<ContraindicationResponse> Contraindications { get; set; }
         public List<CompositionResponse> Compositions { get; set; }
+        public List<MedicineInteractionResponse> Interactions { get; set; }
     }
 }

@@ -16,17 +16,6 @@ namespace MedHelper_API.Repository
         {
         }
 
-        public async Task<List<Patient>> GetAll(int userId)
-        {
-            var result = await _context.Patients                
-                .Include(obj => obj.PatientMedicines)
-                .Include(obj =>obj.PatientDiseases)
-                .Where(obj => obj.DoctorID == userId).ToListAsync();
-            if (result == null) throw new KeyNotFoundException($"Patients hasn't been found.");
-
-            return result;
-        }
-
         public async Task<Patient> GetPatient(int userId, int patientId)
         {
             var result = await _context.Patients
@@ -34,7 +23,7 @@ namespace MedHelper_API.Repository
                 .Include(obj =>obj.PatientDiseases)
                 .FirstOrDefaultAsync(obj => obj.PatientID == patientId && obj.DoctorID == userId);
             
-            if (result == null) throw new KeyNotFoundException($"Patients hasn't been found.");
+            if (result == null) throw new KeyNotFoundException($"Patient hasn't been found.");
 
             return result;
         }

@@ -27,12 +27,11 @@ namespace MedHelper_UI
     {
         public Page_Doctor MainWindow;
         private HttpClient client = new HttpClient();
-        public List<String> medicines = new List<string> { "Medecine1", "Medecine2", "Medekine3", "Medekine4", "Medekine5", "Medicine6", "Medicine7", "Medicine8", "Medicine9"};
-        public List<String> found = new List<string>();
+        public List<Medicine> medicines = new List<Medicine>();
+        public List<Medicine> found = new List<Medicine>();
         public List<Button> buttons;
-        public StackPanel medicinePanel = new StackPanel();
         private int UserId;
-        
+
         public PatientInfo(Page_Doctor mainWindow, int userId)
         {
             UserId = userId;
@@ -41,144 +40,21 @@ namespace MedHelper_UI
             buttons = new List<Button>(medicines.Count);
             setInformation();
             FindResults.TextChanged += SearchEvent;
-
-            //for (int i = 0; i < medicines.Count(); i++)
-            //{
-            //    buttons.Add(new Button());
-            //    buttons[i].Content = medicines[i];
-            //    buttons[i].Height = height;
-            //    buttons[i].Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF56C1CA"));
-            //    buttons[i].Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff"));
-            //    buttons[i].BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff"));
-            //    buttons[i].Click += new RoutedEventHandler(medicine_Click);
-            //}
-            //StackPP.Children.Clear();
-            //var button_num = 0;
-
-            //medicinePanel.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff"));
-            //var medicineText = new TextBlock();
-            //var medicineDescription = "Не слід порушувати рекомендації щодо застосування лікарського засобу ‒ це може зашкодити здоров’ю. " +
-            //    "Не слід перевищувати рекомендовані дози лікарського засобу. " +
-            //    "При застосуванні препарату слід утримуватися від вживання алкоголю. " +
-            //    "Препарат містить етанол.Не рекомендується застосування лікарського засобу протягом тривалого часу." +
-            //    " Валеріана може виявляти помірний депресивний ефект, тому не рекомендується сумісний прийом лікарського " +
-            //    "засобу із синтетичними седативними засобами через потенціювання ефекту. " +
-            //    "При вираженому атеросклерозі мозкових судин препарат можна застосовувати тільки під контролем лікаря. " +
-            //    "У процесі зберігання допускається випадання осаду. Перед застосуванням препарат слід збовтувати. " +
-            //    "Валеріанка - Вішфа є традиційним лікарським засобом для використання відповідно до показань, підтверджених тривалим застосуванням. " +
-            //    "Застосування у період вагітності або годування груддю " +
-            //    "Препарат не застосовувати у період вагітності або годування груддю через вміст етанолу 70 %. " +
-            //    "Здатність впливати на швидкість реакції при керуванні автотранспортом або іншими механізмами. " +
-            //    "На період лікування препаратом слід утримуватися від керування транспортними засобами та роботи з потенційно ‒ небезпечними механізмами через вміст етанолу 70 % та можливість розвитку побічних ефектів з боку центральної нервової системи.";
-
-            //medicineDescription = Regex.Replace(medicineDescription, ".{50}", "$0\n");
-            //medicineText.Text = medicineDescription;
-            //medicineText.Margin = new Thickness(10, 0, 5, 0);
-            //medicineText.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFED635E"));
-            //medicinePanel.Children.Add(medicineText);
-            //for (int i = 0; i < medicines.Count(); i++)
-            //{
-            //    StackPP.Children.Add(buttons[i]);
-            //}
-
-            //StackPP.Children.Add(medicinePanel);
-
-            //for (int i = button_num + 1; i < medicines.Count(); i++)
-            //{
-            //    StackPP.Children.Add(buttons[i]);
-            //}
-            //fix
+            Search("");
         }
 
         private void SearchEvent(object sender, TextChangedEventArgs e)
         {
             Search(FindResults.Text);
         }
+
         private void medicine_Click(object sender, RoutedEventArgs e)
         {
-            StackPP.Children.Clear();
-            var button_num = 0;
-            var medicinePanel = new StackPanel();
-            medicinePanel.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff"));
-            var medicineName = CreateMedicineText("Medicine Name: ", "#FFED635E");
-            var medicineName2 = CreateMedicineText("Medicine ", "#000000", false);
-            var StackPName = new StackPanel();
-            StackPName.Margin = new Thickness(0, 3, 0, 0);
-            StackPName.Orientation = Orientation.Horizontal;
-            StackPName.Children.Add(medicineName);
-            StackPName.Children.Add(medicineName2);
-            medicinePanel.Children.Add(StackPName);
-
-            var medicineGroup = CreateMedicineText("Medicine Group: ", "#FFED635E");
-            var medicineGroup2 = CreateMedicineText("Group ", "#000000", false);
-            var StackPGroup = new StackPanel();
-            StackPGroup.Orientation = Orientation.Horizontal;
-            StackPGroup.Children.Add(medicineGroup);
-            StackPGroup.Children.Add(medicineGroup2);
-            medicinePanel.Children.Add(StackPGroup);
-
-            var composition = new List<String> { "Composition1", "Composition2", "Composition3" };
-            var compositionString = Regex.Replace(String.Join(", ", composition), ".{27}", "$0\n");
-            var medicineComposition = CreateMedicineText("Medicine Composition: ", "#FFED635E");
-            var medicineComposition2 = CreateMedicineText(compositionString, "#000000", false);
-            var StackPComposition = new StackPanel();
-            StackPComposition.Orientation = Orientation.Horizontal;
-            StackPComposition.Children.Add(medicineComposition);
-            StackPComposition.Children.Add(medicineComposition2);
-            medicinePanel.Children.Add(StackPComposition);
-
-            var сontraindication = new List<String> { "Contraindication1", "Contraindication2", "Contraindication3" };
-            var сontraindicationString = Regex.Replace(String.Join(", ", сontraindication), ".{25}", "$0\n");
-            var medicineContraindication = CreateMedicineText("Medicine Contraindication: ", "#FFED635E");
-            var medicineContraindication2 = CreateMedicineText(сontraindicationString, "#000000", false);
-            var StackPContraindication = new StackPanel();
-            StackPContraindication.Orientation = Orientation.Horizontal;
-            StackPContraindication.Children.Add(medicineContraindication);
-            StackPContraindication.Children.Add(medicineContraindication2);
-            medicinePanel.Children.Add(StackPContraindication);
-
-            var interaction = new Dictionary<String, String> { { "Medicine1", "Interaction1" },
-                {"Medicine2", "Interaction2" },
-                {"Medicine3",  "Interaction3" } };
-            var medicineInteraction = CreateMedicineText("Medicine Interaction: ", "#FFED635E");
-            var StackPInteraction = new StackPanel();
-            StackPInteraction.Orientation = Orientation.Horizontal;
-            StackPInteraction.Children.Add(medicineInteraction);
-            medicinePanel.Children.Add(StackPInteraction);
-
-            var ind = 1;
-            var StackPInteractionAll = new StackPanel();
-            StackPInteractionAll.Margin = new Thickness(0, 0, 0, 5);
-            foreach (var (key, value) in interaction)
-            {
-                var medicineInteractionMedicine = CreateMedicineText($"{ind}. {Regex.Replace(key, ".{25}", "$0\n")}:", "#000000");
-                var medicineInteractionInteraction = CreateMedicineText(Regex.Replace(value, ".{33}", "$0\n"), "#000000", false);
-                StackPInteraction = new StackPanel();
-                StackPInteraction.Orientation = Orientation.Horizontal;
-                StackPInteraction.Children.Add(medicineInteractionMedicine);
-                StackPInteraction.Children.Add(medicineInteractionInteraction);
-                StackPInteractionAll.Children.Add(StackPInteraction);
-                ind++;
-            }
-            medicinePanel.Children.Add(StackPInteractionAll);
-
-            for (int i = 0; i < button_num + 1; i++)
-            {
-                StackPP.Children.Add(buttons[i]);
-            }
-
-            StackPP.Children.Add(medicinePanel);
-
-            for (int i = button_num + 1; i < medicines.Count(); i++)
-            {
-                StackPP.Children.Add(buttons[i]);
-            }
-
-        }
-        private void medicine12_Click(object sender, RoutedEventArgs e)
-        {
-            
-            if(medicinePanel.Visibility==System.Windows.Visibility.Visible)
+            var button = (Button)sender;
+            var medicine = (Medicine)button.Content;
+            var med = StackPP.FindName("desc2");
+            var medicinePanel = FindChild<StackPanel>(StackPP, $"desc{medicine.MedicineID}");
+            if (medicinePanel.Visibility == System.Windows.Visibility.Visible)
             {
                 medicinePanel.Visibility = System.Windows.Visibility.Collapsed;
             }
@@ -241,6 +117,47 @@ namespace MedHelper_UI
                 }
             }
 
+            var medicineResponse = client.GetAsync($"https://localhost:44374/api/v1/patient/{UserId}/search=п");
+            medicineResponse.Wait();
+            if (medicineResponse.Result.IsSuccessStatusCode)
+            {
+                var result = JsonConvert.DeserializeObject<dynamic>(medicineResponse.Result.Content.ReadAsStringAsync().Result);
+                foreach (var item in result.result)
+                {
+                    var medicineComp = new List<MedicineComposition>();
+                    foreach (var comp in item.compositions)
+                    {
+                        medicineComp.Add(new MedicineComposition() { Composition = new Composition() { Description = comp } });
+                    }
+
+                    var medicineContr = new List<MedicineContraindication>();
+                    foreach (var contr in item.contraindications)
+                    {
+                        medicineContr.Add(new MedicineContraindication() { Contraindication = new Contraindication() { Description = contr } });
+                    }
+
+                    var medicineInter = new List<MedicineInteraction>();
+                    foreach (var inter in item.medicineInteractions)
+                    {
+                        medicineInter.Add(new MedicineInteraction()
+                        {
+                            Description = inter.description,
+                            Composition = new Composition() { Description = inter.compositionDescription }
+                        });
+                    }
+
+                    medicines.Add(new Medicine()
+                    {
+                        MedicineID = item.medicineID,
+                        Name = item.name,
+                        pharmacotherapeuticGroup = item.pharmacotherapeuticGroup,
+                        MedicineCompositions = medicineComp,
+                        MedicineContraindications = medicineContr,
+                        MedicineInteractions = medicineInter
+                    });
+                }
+            }
+
         }
         public static TextBlock CreateMedicineBlock(String text)
         {
@@ -259,16 +176,89 @@ namespace MedHelper_UI
             return textBolock;
         }
 
+        private static StackPanel createDesc(Medicine m)
+        {
+            var medicinePanel = new StackPanel();
+            medicinePanel.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff"));
+            var medicineName = CreateMedicineText("Medicine Name: ", "#FFED635E");
+            var medicineName2 = CreateMedicineText(m.Name, "#000000", false);
+            var StackPName = new StackPanel();
+            StackPName.Margin = new Thickness(0, 3, 0, 0);
+            StackPName.Orientation = Orientation.Horizontal;
+            StackPName.Children.Add(medicineName);
+            StackPName.Children.Add(medicineName2);
+            medicinePanel.Children.Add(StackPName);
+
+            var medicineGroup = CreateMedicineText("Medicine Group: ", "#FFED635E");
+            var medicineGroup2 = CreateMedicineText(m.pharmacotherapeuticGroup, "#000000", false);
+            var StackPGroup = new StackPanel();
+            StackPGroup.Orientation = Orientation.Horizontal;
+            StackPGroup.Children.Add(medicineGroup);
+            StackPGroup.Children.Add(medicineGroup2);
+            medicinePanel.Children.Add(StackPGroup);
+
+            var composition = new List<String> ();
+            foreach (var item in m.MedicineCompositions)
+            {
+                composition.Add(item.Composition.Description);
+            }
+            var compositionString = Regex.Replace(String.Join(", ", composition), ".{27}", "$0\n");
+            var medicineComposition = CreateMedicineText("Medicine Composition: ", "#FFED635E");
+            var medicineComposition2 = CreateMedicineText(compositionString, "#000000", false);
+            var StackPComposition = new StackPanel();
+            StackPComposition.Orientation = Orientation.Horizontal;
+            StackPComposition.Children.Add(medicineComposition);
+            StackPComposition.Children.Add(medicineComposition2);
+            medicinePanel.Children.Add(StackPComposition);
+
+            var сontraindication = new List<String>();
+            foreach (var item in m.MedicineContraindications)
+            {
+                сontraindication.Add(item.Contraindication.Description);
+            }
+            var сontraindicationString = Regex.Replace(String.Join(", ", сontraindication), ".{25}", "$0\n");
+            var medicineContraindication = CreateMedicineText("Medicine Contraindication: ", "#FFED635E");
+            var medicineContraindication2 = CreateMedicineText(сontraindicationString, "#000000", false);
+            var StackPContraindication = new StackPanel();
+            StackPContraindication.Orientation = Orientation.Horizontal;
+            StackPContraindication.Children.Add(medicineContraindication);
+            StackPContraindication.Children.Add(medicineContraindication2);
+            medicinePanel.Children.Add(StackPContraindication);
+
+            var interaction = new Dictionary<String, String>();
+            foreach (var item in m.MedicineInteractions)
+            {
+                interaction.Add(item.Composition.Description, item.Description);
+            }
+            var medicineInteraction = CreateMedicineText("Medicine Interaction: ", "#FFED635E");
+            var StackPInteraction = new StackPanel();
+            StackPInteraction.Orientation = Orientation.Horizontal;
+            StackPInteraction.Children.Add(medicineInteraction);
+            medicinePanel.Children.Add(StackPInteraction);
+
+            var ind = 1;
+            var StackPInteractionAll = new StackPanel();
+            StackPInteractionAll.Margin = new Thickness(0, 0, 0, 5);
+            foreach (var (key, value) in interaction)
+            {
+                var medicineInteractionMedicine = CreateMedicineText($"{ind}. {Regex.Replace(key, ".{25}", "$0\n")}:", "#000000");
+                var medicineInteractionInteraction = CreateMedicineText(Regex.Replace(value, ".{33}", "$0\n"), "#000000", false);
+                StackPInteraction = new StackPanel();
+                StackPInteraction.Orientation = Orientation.Horizontal;
+                StackPInteraction.Children.Add(medicineInteractionMedicine);
+                StackPInteraction.Children.Add(medicineInteractionInteraction);
+                StackPInteractionAll.Children.Add(StackPInteraction);
+                ind++;
+            }
+            medicinePanel.Children.Add(StackPInteractionAll);
+            medicinePanel.Visibility = Visibility.Collapsed;
+            medicinePanel.Name = $"desc{m.MedicineID}";
+            return medicinePanel;
+        }
         private void Search(string text)
         {
             found.Clear();
-            foreach (var item in medicines)
-            {
-                if (item.Contains(text))
-                {
-                    found.Add(item);
-                }
-            }
+            found = medicines.Where(x => x.Name.Contains(text)).ToList();
 
             var height = 30;
             for (int i = 0; i < found.Count(); i++)
@@ -286,11 +276,50 @@ namespace MedHelper_UI
             for (int i = 0; i < found.Count(); i++)
             {
                 StackPP.Children.Add(buttons[i]);
+                StackPP.Children.Add(createDesc(found[i]));
             }
         }
         private void BtmEditPatientClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.DoctorFrame.Content = new Page_EditPatient(MainWindow,UserId);
+            MainWindow.DoctorFrame.Content = new Page_EditPatient(MainWindow, UserId);
+        }
+
+
+        private static T FindChild<T>(DependencyObject parent, string childName)
+   where T : DependencyObject
+        {
+            if (parent == null) return null;
+
+            T foundChild = null;
+
+            int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < childrenCount; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                T childType = child as T;
+                if (childType == null)
+                {
+                    foundChild = FindChild<T>(child, childName);
+
+                    if (foundChild != null) break;
+                }
+                else if (!string.IsNullOrEmpty(childName))
+                {
+                    var frameworkElement = child as FrameworkElement;
+                    if (frameworkElement != null && frameworkElement.Name == childName)
+                    {
+                        foundChild = (T)child;
+                        break;
+                    }
+                }
+                else
+                {
+                    foundChild = (T)child;
+                    break;
+                }
+            }
+
+            return foundChild;
         }
     }
 }

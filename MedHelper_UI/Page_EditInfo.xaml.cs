@@ -42,7 +42,7 @@ namespace MedHelper_UI
                 }
                 else
                 {
-                    
+
 
                     var str = "{\n" + $"\"FirstName\": \"{firstname.Text}\",\n" +
                               $"\"LastName\": \"{lastname.Text}\",\n" +
@@ -57,6 +57,11 @@ namespace MedHelper_UI
                     {
                         var res = JsonConvert.DeserializeObject<dynamic>(response.Result.Content.ReadAsStringAsync().Result);
                         MainWindow.mainWindow.MainFrame.Content = new Page_Doctor(MainWindow.mainWindow);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Something went wrong. Try again", "Error", MessageBoxButton.OK, MessageBoxImage.Hand);
+
                     }
                 }
             }

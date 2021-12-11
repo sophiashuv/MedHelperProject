@@ -66,7 +66,7 @@ namespace MedHelper_UI
                 }
                 foreach (var item in res.result.diseases)
                 {
-                    var el= new Disease() { DiseaseID=item.DiseaseID, Title=item.title };
+                    var el= new Disease() { DiseaseID=item.diseaseID, Title=item.title };
                     var textBlock = CreateTextBlock(el.ToString());
                     diseases.Add(el.DiseaseID);
                     StackP2.Children.Add(textBlock);

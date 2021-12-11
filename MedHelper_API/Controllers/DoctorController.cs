@@ -18,6 +18,10 @@ namespace MedHelper_API.Controllers
     public class DoctorController: BaseController
     {
         private readonly IDoctorService _service;
+
+        public DoctorController(IDoctorService service)
+        {
+            _service = service;
         private readonly ILogger<DoctorController> _logger;
 
         public DoctorController(IDoctorService service, ILogger<DoctorController> logger)
@@ -33,6 +37,7 @@ namespace MedHelper_API.Controllers
             {
                 var userId = GetCurrentUserId();
                 await _service.Update(doctor, userId);
+
                 _logger.LogInformation($"Updated doctor with id {userId}.");
                 return NoContent();
             }

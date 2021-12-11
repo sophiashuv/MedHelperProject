@@ -8,6 +8,7 @@ using MedHelper_EF.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+
 using Microsoft.IdentityModel.Tokens;
 using MyApi.Controllers;
 using Newtonsoft.Json;
@@ -101,7 +102,7 @@ namespace MedHelper_API.Controllers
                 diseases.Title
             });
         }
-        
+
         [HttpGet("patient/{id}/search={search}")]
         public async Task<ActionResult> Search(int id, string search)
         {
@@ -110,7 +111,7 @@ namespace MedHelper_API.Controllers
             var patient = await _context.Patients
                 .Include(obj => obj.PatientDiseases)
                 .FirstOrDefaultAsync(obj => obj.PatientID == id && obj.DoctorID == user);
-            
+
             if (patient is null)
             {
                 return NotFound();
@@ -118,7 +119,7 @@ namespace MedHelper_API.Controllers
 
             var patientDiseases = await _context.Diseases.Where(obj =>
                 patient.PatientDiseases.Select(o => o.DiseaseID).Contains(obj.DiseaseID)).ToListAsync();
-            
+
             // var response = _context.Medicines
             //     .Include(obj => obj.MedicineCompositions)
             //     .Include(obj => obj.MedicineContraindications)

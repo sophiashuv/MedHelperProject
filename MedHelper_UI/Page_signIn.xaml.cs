@@ -1,19 +1,10 @@
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MedHelper_UI
 {
@@ -28,6 +19,8 @@ namespace MedHelper_UI
         {
             InitializeComponent();
             MainWindow = mainWindow;
+            email.GotFocus += RemoveText;
+            email.LostFocus += AddText;
         }
         private void Login()
         {
@@ -43,8 +36,21 @@ namespace MedHelper_UI
             {
                 var res = JsonConvert.DeserializeObject<dynamic>(response.Result.Content.ReadAsStringAsync().Result);
                 MainWindow.token = res.result.accessToken;
+                MainWindow.cabinet.IsEnabled = true;
+                MainWindow.logout.IsEnabled = true;
+                MainWindow.cabinet.Visibility = Visibility.Visible;
+                MainWindow.logout.Visibility = Visibility.Visible;
+                MainWindow.login.IsEnabled = false;
+                MainWindow.signin.IsEnabled = false;
+                MainWindow.login.Visibility = Visibility.Collapsed;
+                MainWindow.signin.Visibility = Visibility.Collapsed;
                 MainWindow.MainFrame.Content = new Page_Doctor(MainWindow);
             }
+            else
+            {
+                MessageBox.Show("Invalid credentials. Try again", "Invalid credentials", MessageBoxButton.OK, MessageBoxImage.Hand);
+            }
+
 
         }
         private void BtmClickSignInPage(object sender, RoutedEventArgs e)
@@ -55,6 +61,24 @@ namespace MedHelper_UI
         private void BtmClickRegisterSignInPage(object sender, RoutedEventArgs e)
         {
             MainWindow.MainFrame.Content = new Page_signUp(MainWindow);
+        }
+
+        public void RemoveText(object sender, EventArgs e)
+        {
+            if (email.Text == "example@email.com")
+            {
+                email.Text = "";
+                email.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#000000"));
+            }
+        }
+
+        public void AddText(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(email.Text))
+            {
+                email.Text = "example@email.com";
+                email.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF716E6E"));
+            }
         }
     }
 }

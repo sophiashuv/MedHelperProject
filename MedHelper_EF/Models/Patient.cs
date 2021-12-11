@@ -23,5 +23,10 @@ namespace MedHelper_EF.Models
         public virtual Doctor Doctor { get; set; }
         public virtual ICollection<PatientDisease> PatientDiseases { get; set; }
         public virtual ICollection<PatientMedicine> PatientMedicines { get; set; }
+
+        public override string ToString()
+        {
+            return UserName;
+        }
     }
 }

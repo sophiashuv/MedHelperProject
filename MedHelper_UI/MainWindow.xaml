@@ -5,22 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MedHelper_UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        ResizeMode="NoResize"
+        Title="MedHelper" Height="450" Width="800">
+ 
     <Grid>
-        <StackPanel Orientation="Horizontal" Height="50" VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="#FFED635E"/>
-        <StackPanel Orientation="Horizontal" Height="50" VerticalAlignment="Top" HorizontalAlignment="Right">
-            <Button Content="Sign in" MinWidth="100" MinHeight="25" Margin="0,0,20,0" Click="BtmClickSignIn" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="#FF56C1CA" BorderBrush="White" Foreground="White"></Button>
-            <Button Content="Sign up" MinWidth="100" MinHeight="25" Margin="0,0,20,0" Click="BtmClickSignUp" HorizontalAlignment="Stretch" VerticalAlignment="Center" Foreground="#FFFDFDFD" BorderBrush="White" Background="#FF56C1CA"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left">
-            <Button  Margin="20,3,3,3" MinWidth="44" Click="BtmClickMedHelper" BorderBrush="{x:Null}">
-                <Button.Background>
-                    <ImageBrush ImageSource="images/MedHerperCircle.png"/>
-                </Button.Background>
-            </Button>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Background="#FF56C1CA"/>
 
-        <Frame x:Name="MainFrame" Margin="0,50,0,0" NavigationUIVisibility="Hidden"/>
+        <StackPanel x:Name="Header" Orientation="Horizontal" Height="50" VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="#FFED635E" Visibility="Collapsed"/>
+            <StackPanel Orientation="Horizontal" Height="50" VerticalAlignment="Top" HorizontalAlignment="Right">
+            <Button Name="cabinet" Margin="20,3,20,3" MinWidth="44" Click="BtmClickDoctor" Visibility="Collapsed" BorderBrush="{x:Null}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="images/DoctorLogo.png"/>
+                    </Button.Background>
+                </Button>
+            <Button Name="logout" Content="Log out" MinWidth="100" MinHeight="25" Margin="0,0,20,0" Click="BtmClickLogOut" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="#FF56C1CA" BorderBrush="White" Foreground="White" Visibility="Collapsed"></Button>
+            <Button Name="login" Content="Sign in" MinWidth="100" MinHeight="25" Margin="0,0,20,0" Click="BtmClickSignIn" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="#FF56C1CA" BorderBrush="White" Foreground="White" Visibility="Collapsed"></Button>
+            <Button Name="signin" Content="Sign up" MinWidth="100" MinHeight="25" Margin="0,0,20,0" Click="BtmClickSignUp" HorizontalAlignment="Stretch" VerticalAlignment="Center" Foreground="#FFFDFDFD" BorderBrush="White" Background="#FF56C1CA" Visibility="Collapsed"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Button x:Name="mainWin" Margin="20,3,3,3" MinWidth="44" Click="BtmClickMedHelper" Visibility="Collapsed" BorderBrush="{x:Null}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="images/MedHerperCircle.png"/>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
+        <StackPanel x:Name="Footer" Orientation="Horizontal" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Background="#FF56C1CA" Visibility="Collapsed">
+        </StackPanel>
+        <Frame x:Name="MainFrame" Margin="0,50,0,20" NavigationUIVisibility="Hidden"/>
+
+        <MediaElement x:Name="Media" Visibility="Visible" LoadedBehavior="Manual" MediaEnded="MediaElement_MediaEnded" Stretch ="Fill" Source="D:\3 курс\інженерія2\ValeriaMahdenko\MedHelperProject\MedHelper_UI\images\LoadingLogo.gif">
+        </MediaElement>
     </Grid>
+    
 </Window>

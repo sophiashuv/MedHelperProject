@@ -102,7 +102,7 @@ namespace MedHelper_UI
                     var stackPanel = new StackPanel();
                     stackPanel.Orientation = Orientation.Horizontal;
                     var number = CreateNumberBlock($"{counter}. ");
-                    var medicineName = CreateMedicineBlock(Convert.ToString(item));
+                    var medicineName = CreateMedicineBlock(Convert.ToString(item.title));
                     stackPanel.Children.Add(number);
                     stackPanel.Children.Add(medicineName);
                     DiseaseList.Children.Add(stackPanel);

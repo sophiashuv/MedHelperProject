@@ -93,7 +93,12 @@ namespace MedHelper_API.Controllers
                         obj.Birthdate,
                         obj.Gender,
                         obj.UserName,
-                        Diseases = obj.PatientDiseases.Select(d => d.Disease.Title),
+                        Diseases = obj.PatientDiseases.Select(d => new
+                        {
+                            d.Disease.Title,
+                            d.Disease.DiseaseID
+                        }
+                        ),
                         Medicines = obj.PatientMedicines.Select(medicine => new
                         {
                             medicine.Medicine.MedicineID,

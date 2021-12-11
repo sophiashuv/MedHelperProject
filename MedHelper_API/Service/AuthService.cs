@@ -68,10 +68,10 @@ namespace MedHelper_API.Service
             return await GetAccessToken(user);
         }
 
-        public async Task<Doctor> getInfo(int id)
+        public Task<Doctor> getInfo(int id)
         {
-           var doctor = _repository.GetById(id);
-            return doctor.Result;
+           var doctor =  _repository.GetById(id);
+            return Task.FromResult(doctor.Result);
         }
     }
 }

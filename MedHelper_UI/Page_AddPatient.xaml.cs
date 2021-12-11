@@ -16,7 +16,7 @@ namespace MedHelper_UI
     /// <summary>
     /// Interaction logic for Page_AddPatient.xaml
     /// </summary>
-    public partial class Page_AddPatient : Page, INotifyPropertyChanged
+    public partial class Page_AddPatient : Page
     {
         private HttpClient client = new HttpClient();
         public Page_Doctor MainWindow;
@@ -25,7 +25,6 @@ namespace MedHelper_UI
         public List<TextBlock> textBoxesMedicine = new List<TextBlock>();
         public List<TextBlock> textBoxesDisasters = new List<TextBlock>();
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public Page_AddPatient(Page_Doctor mainWindow)
         {

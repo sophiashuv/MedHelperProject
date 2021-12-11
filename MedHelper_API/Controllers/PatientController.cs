@@ -32,7 +32,7 @@ namespace MedHelper_API.Controllers
         }
         
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PatientResponse>>> GetAllPatients()
+        public ActionResult<IEnumerable<PatientResponse>> GetAllPatients()
         {
             try
             {
@@ -77,7 +77,7 @@ namespace MedHelper_API.Controllers
         }
         
         [HttpGet("{id}")]
-        public async Task<ActionResult<PatientResponse>> GetOne(int id)
+        public ActionResult<PatientResponse> GetOne(int id)
         {
             try
             {

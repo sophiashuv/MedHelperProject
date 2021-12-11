@@ -62,7 +62,7 @@ namespace MedHelper_Tests
         };
 
         [Fact]
-        public async Task GetPatient_ReturnsUnauthorized()
+        public Task GetPatient_ReturnsUnauthorized()
         {
 
             //_patientService.Setup(serv => serv.GetOne(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync((PatientResponse)null);
@@ -73,12 +73,13 @@ namespace MedHelper_Tests
                 HttpContext = new DefaultHttpContext() { User = fakeDoctor }
             };
 
-            var result = await controller.GetOne(1200);
+            var result = controller.GetOne(1200);
             Assert.IsType<UnauthorizedObjectResult>(result.Result);
+            return Task.CompletedTask;
         }
 
         [Fact]
-        public async Task GetPatients_ReturnsUnauthorized()
+        public Task GetPatients_ReturnsUnauthorized()
         {
             List<PatientResponse> patientList = new List<PatientResponse>() { };
             patientList.Add(TestPatient1);
@@ -91,8 +92,9 @@ namespace MedHelper_Tests
                 HttpContext = new DefaultHttpContext() { User = fakeDoctor }
             };
 
-            var result = await controller.GetAllPatients();
+            var result = controller.GetAllPatients();
             Assert.IsType<UnauthorizedObjectResult>(result.Result);
+            return Task.CompletedTask;
         }
 
         [Fact]

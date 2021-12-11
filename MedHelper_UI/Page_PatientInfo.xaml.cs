@@ -82,6 +82,7 @@ namespace MedHelper_UI
             {
                 var res = JsonConvert.DeserializeObject<dynamic>(response.Result.Content.ReadAsStringAsync().Result);
                 username.Text = res.result.userName;
+                userTitle.Text = res.result.userName;
                 Age.Text = (new DateTime((DateTime.Now - Convert.ToDateTime(res.result.birthdate)).Ticks).Year - 1).ToString();
                 if (res.result.gender == "one")
                 {
@@ -109,7 +110,7 @@ namespace MedHelper_UI
                     var stackPanel = new StackPanel();
                     stackPanel.Orientation = Orientation.Horizontal;
                     var number = CreateNumberBlock($"{counter}. ");
-                    var medicineName = CreateMedicineBlock(Convert.ToString(item.name));
+                    var medicineName = CreateMedicineBlock(Convert.ToString(item));
                     stackPanel.Children.Add(number);
                     stackPanel.Children.Add(medicineName);
                     DiseaseList.Children.Add(stackPanel);
@@ -258,9 +259,11 @@ namespace MedHelper_UI
         private void Search(string text)
         {
             found.Clear();
-            found = medicines.Where(x => x.Name.Contains(text)).ToList();
+            found = medicines.Where(x => x.Name.ToLower().Contains(text.ToLower()) ||
+            x.pharmacotherapeuticGroup.ToLower().Contains(text.ToLower())).ToList();
 
             var height = 30;
+            buttons.Clear();
             for (int i = 0; i < found.Count(); i++)
             {
                 buttons.Add(new Button());

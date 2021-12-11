@@ -11,7 +11,7 @@
     <Grid>
         <StackPanel Orientation="Horizontal">
             <StackPanel HorizontalAlignment="Left">
-                <TextBlock HorizontalAlignment="Center" Text="UserName" VerticalAlignment="Center" FontSize="20" Foreground="#FF56C1CA" FontWeight="Bold" TextDecorations="Underline" />
+                <TextBlock x:Name="userTitle" HorizontalAlignment="Center" Text="UserName" VerticalAlignment="Center" FontSize="20" Foreground="#FF56C1CA" FontWeight="Bold" TextDecorations="Underline" />
                 <StackPanel HorizontalAlignment="Center"  VerticalAlignment="Bottom" Margin="10,10,10,10">
                     <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Orientation="Horizontal" Background="#FFE47872" Width="350">
                         <TextBlock HorizontalAlignment="Left" Text="Patient personal info" VerticalAlignment="Center" FontSize="14" Foreground="#FFFAFAFA" FontWeight="Bold" Margin="5,0,0,0" />

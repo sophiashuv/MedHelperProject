@@ -32,7 +32,7 @@
         </StackPanel>
         <Frame x:Name="MainFrame" Margin="0,50,0,20" NavigationUIVisibility="Hidden"/>
 
-        <MediaElement x:Name="Media" Visibility="Visible" LoadedBehavior="Manual" MediaEnded="MediaElement_MediaEnded" Stretch ="Fill" Source="D:\3 курс\інженерія2\ValeriaMahdenko\MedHelperProject\MedHelper_UI\images\LoadingLogo.gif">
+        <MediaElement x:Name="Media" Visibility="Visible" LoadedBehavior="Manual" MediaEnded="MediaElement_MediaEnded" Stretch ="Fill">
         </MediaElement>
     </Grid>
     

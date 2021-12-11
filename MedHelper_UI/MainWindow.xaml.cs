@@ -16,8 +16,8 @@ namespace MedHelper_UI
         {
             
             InitializeComponent();
-            Loaded += MainWindow_Loaded;
             Media.Source = new Uri(@"..\..\..\images\LoadingLogo.gif", UriKind.Relative);
+            Loaded += MainWindow_Loaded;
             cabinet.IsEnabled = false;
             logout.IsEnabled = false;
             cabinet.Visibility = Visibility.Collapsed;

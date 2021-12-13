@@ -107,7 +107,7 @@ namespace MedHelper_UI
                 response.Wait();
                 if (response.Result.IsSuccessStatusCode)
                 {
-                    MainWindow.DoctorFrame.Content = new Page_DoctorInfo(MainWindow);
+                    MainWindow.DoctorFrame.Content = new PatientInfo(MainWindow, UserId);
                 }
                 else
                 {

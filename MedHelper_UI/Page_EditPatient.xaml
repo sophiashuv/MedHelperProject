@@ -19,7 +19,7 @@
                             <TextBox Name="username" HorizontalAlignment="Left" Text="Name" VerticalAlignment="Top" Width="222" Height="25" Foreground="#FF716E6E" />
                         </StackPanel>
                         <StackPanel Orientation="Vertical"  VerticalAlignment="Stretch" HorizontalAlignment="Left" AutomationProperties.ItemType="int" Margin="0,0,0,10">
-                            <TextBlock HorizontalAlignment="Left" Text="Date of buirth:" VerticalAlignment="Center" FontSize="16" />
+                            <TextBlock HorizontalAlignment="Left" Text="Date of birth:" VerticalAlignment="Center" FontSize="16" />
                             <DatePicker Name="date" Width="150" Height="25"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="0,0,0,5">

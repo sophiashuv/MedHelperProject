@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>MedHerperCircle.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="DoctorLogo.png" />
+    <None Remove="DoctorLogo1.png" />
+    <None Remove="EditLogo.png" />
+    <None Remove="MedHelperSignUp.jpg" />
+    <None Remove="MedHelperTitle.jpg" />
+    <None Remove="MedHelperTitle.png" />
+    <None Remove="MedHelperWelcome.jpg" />
+    <None Remove="MedHerperCircle.png" />
+    <None Remove="MinusLogo.png" />
+    <None Remove="Patient.png" />
+    <None Remove="plusLogo.png" />
+    <None Remove="SearchLogo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Syncfusion.Shared.WPF" Version="19.3.0.54" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MedHelper_EF\MedHelper_EF.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\DoctorLogo.png" />
+    <Resource Include="images\DoctorLogo1.png" />
+    <Resource Include="images\EditLogo.png" />
+    <Resource Include="images\MedHelperSignUp.jpg" />
+    <Resource Include="images\MedHelperTitle.jpg" />
+    <Resource Include="images\MedHelperWelcome.jpg" />
+    <Resource Include="images\MedHerperCircle.png" />
+    <Resource Include="images\MedHelperTitle.png" />
+    <Resource Include="images\SearchLogo.png" />
+    <Resource Include="images\MinusLogo.png" />
+    <Resource Include="images\Patient.png" />
+    <Resource Include="images\plusLogo.png" />
+  </ItemGroup>
+
+</Project>

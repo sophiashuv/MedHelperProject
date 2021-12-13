@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MedHelper_EF.Models
 {
-    public partial class Medicine
+    public partial class Medicine: BaseEntity
     {
         public Medicine()
         {
@@ -24,5 +24,10 @@ namespace MedHelper_EF.Models
         public virtual ICollection<MedicineComposition> MedicineCompositions { get; set; }
         public virtual ICollection<MedicineInteraction> MedicineInteractions { get; set; }
         public virtual ICollection<PatientMedicine> PatientMedicines { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MedHelper_WPF
+namespace MedHelper_UI
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Page_Welcome.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Page_Welcome : Page
     {
-        public MainWindow()
+        public Page_Welcome()
         {
             InitializeComponent();
         }

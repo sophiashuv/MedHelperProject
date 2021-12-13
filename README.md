@@ -1,5 +1,8 @@
 # MedHelperProject
 
+**MedHelper** is a University Project in Software Engineering. 
+The App is a platform for doctors that ease the fast medicine search depending all patient contraindications. 
+
 ## Clone
 
 - Clone this repo to your local machine. Run "git clone https://github.com/ValeriaMahdenko/MedHelperProject.git" in command line or git bash 
